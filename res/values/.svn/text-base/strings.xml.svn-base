@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="app_name">SpeechCards</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Speech Cards</string>
+    
+    
+    <!-- Buttons -->
+    <string name="btnNext">Siguiente</string>
+    <string name="btnPrev">Anterior</string>
+ 	<string name="btnNewSpeech">Nuevo Discurso</string>
+ 	<string name="btnEditSpeech">Editar Discurso</string>
+ 	<string name="btnPlaySpeech">Reproducir Discurso</string>
+ 	<string name="btnPrevCard">Prev</string>
+ 	<string name="btnAddCard">Añadir</string>
+ 	<string name="btnDeleteCard">Borrar</string>
+ 	<string name="btnEnd">Terminar</string>
+ 		
+ 	
+ 	
+ 	
+ 	<!-- EditTexts -->
+ 	<string name="etHeader">Cabecera...</string>
+ 	<string name="etBody">Texto...</string>
+ 	
+ 	<!-- TextViews -->
+ 	<string name="tvTitle">Título del discurso:</string>
+    
+</resources>
