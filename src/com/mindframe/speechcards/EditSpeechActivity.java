@@ -3,8 +3,6 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.Header;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -108,8 +106,6 @@ public class EditSpeechActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				
-				
 				if(addingCard){
 					Card card = new Card();
 					card.body = etBody.getText().toString();
@@ -117,25 +113,32 @@ public class EditSpeechActivity extends Activity {
 					card.id_prev_card = currentCard.id_card;
 					card.id_next_card = currentCard.id_next_card;
 					card.id_speech = id_speech;
-					
-					int idNewCard = bdh.addCard(card, true);
-					addingCard = false;
-					Toast.makeText(context, "Se ha añadido la tarjeta.", Toast.LENGTH_SHORT).show();
-					
-					cardList = bdh.getCardsByIdSpeech(id_speech);
-					
-					currentCard = getCardById(idNewCard);
+					if(etBody.getText().toString().trim().compareToIgnoreCase("") != 0){
+						int idNewCard = bdh.addCard(card, true);
+						addingCard = false;
+						Toast.makeText(context, "Se ha añadido la tarjeta.", Toast.LENGTH_SHORT).show();
+						
+						cardList = bdh.getCardsByIdSpeech(id_speech);
+						
+						currentCard = getCardById(idNewCard);
+					}else{
+						Toast.makeText(context, "Debe escribir algo en el cuerpo.", Toast.LENGTH_SHORT).show();
+					}
 					
 				}else{
 					if(currentCard != null && !addingCard){
-						if(bdh.modCard(currentCard, etHeader.getText().toString(), etBody.getText().toString())){
-							Toast.makeText(context, "Se ha actualizado la tarjeta.", Toast.LENGTH_SHORT).show();
-							cardList = bdh.getCardsByIdSpeech(id_speech);
+						if(etBody.getText().toString().trim().compareToIgnoreCase("") != 0){
+							if(bdh.modCard(currentCard, etHeader.getText().toString(), etBody.getText().toString())){
+								Toast.makeText(context, "Se ha actualizado la tarjeta.", Toast.LENGTH_SHORT).show();
+								cardList = bdh.getCardsByIdSpeech(id_speech);
+							}else{
+								Toast.makeText(context, "Algo ha fallado :S", Toast.LENGTH_SHORT).show();
+							}
 						}else{
-							Toast.makeText(context, "Algo ha fallado :S", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, "Debe escribir algo en el cuerpo.", Toast.LENGTH_SHORT).show();
 						}
 					}else{
-						Toast.makeText(context, "No hay tarjetas para borrar.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "No hay tarjetas", Toast.LENGTH_SHORT).show();
 					}
 				}
 				

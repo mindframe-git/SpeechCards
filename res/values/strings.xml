@@ -10,7 +10,7 @@
     <string name="btnNext">Siguiente</string>
     <string name="btnPrev">Anterior</string>
  	<string name="btnNewSpeech">Nuevo Discurso</string>
- 	<string name="btnEditSpeech">Editar Discurso</string>
+ 	<string name="btnEditSpeech">Discursos</string>
  	<string name="btnPlaySpeech">Reproducir Discurso</string>
  	<string name="btnPrevCard">Prev</string>
  	<string name="btnNextCard">Sig</string>
@@ -18,6 +18,7 @@
  	<string name="btnDeleteCard">Borrar</string>
  	<string name="btnEnd">Terminar</string>
  	<string name="btnMod">Modificar</string>
+ 	<string name="btnList">Lista de Discursos</string>
  	
  		
  	
@@ -29,5 +30,6 @@
  	
  	<!-- TextViews -->
  	<string name="tvTitle">Título del discurso:</string>
+ 	<string name="btnEditSpeechd">sdfsd</string>
     
 </resources>

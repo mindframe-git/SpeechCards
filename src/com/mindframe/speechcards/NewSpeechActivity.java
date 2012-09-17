@@ -51,18 +51,18 @@ public class NewSpeechActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				String newSpeech = etNewSpeech.getText().toString();
-				if (newSpeech == null || newSpeech.trim().compareToIgnoreCase("") == 0) {
+				String speechTitle = etNewSpeech.getText().toString();
+				if (speechTitle == null || speechTitle.trim().compareToIgnoreCase("") == 0) {
 					Toast.makeText(context, "Debe introducir un nombre", Toast.LENGTH_SHORT).show();
 				} else {
-					if (!bdh.existsSpeech(newSpeech)) {
+					if (!bdh.existsSpeech(speechTitle)) {
 						int id_speech;
 						Bundle bun = new Bundle();
 
-						id_speech = bdh.newSpeech(newSpeech);
+						id_speech = bdh.newSpeech(speechTitle);
 
-						Intent intent = new Intent(NewSpeechActivity.this, EditCardActivity.class);
-						bun.putString("newSpeech", newSpeech);
+						Intent intent = new Intent(NewSpeechActivity.this, EditSpeechActivity.class);
+						bun.putString("speechTitle", speechTitle);
 						bun.putInt("id_speech", id_speech);
 						bun.putInt("id_prev_card", -1);
 						intent.putExtras(bun);

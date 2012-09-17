@@ -6,12 +6,15 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
 public class SpeechActivity extends Activity {
@@ -22,6 +25,7 @@ public class SpeechActivity extends Activity {
 	Context context;
 	List<Card> cardList;
 	Card currentCard;
+	final String TAG = getClass().getName();
 		
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -76,8 +80,6 @@ public class SpeechActivity extends Activity {
 			}
 		});
 		
-//		Toast.makeText(context, "Se han encontrado " + cardList.size() + " tarjetas", Toast.LENGTH_SHORT).show();
-		
 	}
 
 	private Card getFirstCard() {
@@ -92,9 +94,49 @@ public class SpeechActivity extends Activity {
 		if(card != null){
 			if(card.getHeader() != null)
 				tvTitulo.setText(card.getHeader());
-			if(card.getBody() != null)
-				tvCuerpo.setText(card.getBody());
+			if(card.getBody() != null){
+				String body = card.getBody();
+				
+				if(body.contains("#") || body.contains("_")){
+					tvCuerpo.setText(formatText(body),BufferType.SPANNABLE);
+				}else{
+					tvCuerpo.setText(body);
+				}
+				
+			}
 		}
+	}
+	
+	private Spanned formatText(String text){
+		
+		boolean openBold = true;
+		boolean openItalic = true;
+		
+		for(int i = 0; i< text.length(); i++){
+			String x = text.substring(i, i+1);
+			if(x.compareToIgnoreCase("#")==0){
+				
+				if(openBold)
+					text = text.replaceFirst("#", "<b>");
+				else
+					text = text.replaceFirst("#", "</b>");
+				
+				openBold = !openBold;
+				
+			}
+			if(x.compareToIgnoreCase("_")==0){
+				
+				if(openItalic)
+					text = text.replaceFirst("_", "<i>");
+				else
+					text = text.replaceFirst("_", "</i>");
+				
+				openItalic = !openItalic;
+			}
+		}
+		
+		Spanned span = Html.fromHtml(text);
+		return span;
 	}
 	
 	private void getNextCard(){

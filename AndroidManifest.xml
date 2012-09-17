@@ -38,6 +38,9 @@
         <activity
             android:name="EditSpeechActivity" >
         </activity>
+        <activity
+            android:name="ChooseActivity" >
+        </activity>
         
     </application>
 
