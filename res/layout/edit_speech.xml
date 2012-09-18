@@ -46,57 +46,42 @@
         android:text="@string/etBody"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/btnPrevCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="57dp"
-        android:text="@string/btnPrevCard" />
-
-    <Button
-        android:id="@+id/btnNextCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnPrevCard"
-        android:layout_alignParentRight="true"
-        android:text="@string/btnNextCard" />
-
     <EditText
         android:id="@+id/etBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnPrevCard"
+        android:layout_above="@+id/btnNextCard"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView2"
         android:ems="10"
         android:inputType="textMultiLine"
+        android:lines="8"
+        android:maxLines="8"
         android:minEms="11" />
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnNextCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btnPrevCard"
-        android:text="@string/btnAddCard" />
-
-    <Button
-        android:id="@+id/btnDeleteCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/btnDeleteCard" />
+        android:layout_alignParentRight="true"
+        android:text="@string/btnNextCard" />
 
     <Button
         android:id="@+id/btnMod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btnNextCard"
+        android:layout_centerHorizontal="true"
         android:text="@string/btnMod" />
+
+    <Button
+        android:id="@+id/btnPrevCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btnPrevCard" />
 
 </RelativeLayout>
