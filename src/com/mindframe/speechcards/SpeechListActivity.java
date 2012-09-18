@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class SpeechListActivity extends Activity {
 
@@ -22,6 +24,8 @@ public class SpeechListActivity extends Activity {
 	List<Speech> speechList = new ArrayList<Speech>();
 	Context context;
 	String action;
+	
+	final String TAG = getClass().getName();
 
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -32,25 +36,13 @@ public class SpeechListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.speech_list);
 		context = this.getApplicationContext();
-
+		
+		lvSpeeches = (ListView) findViewById(R.id.lvSpeeches);
 
 		Bundle bundle = getIntent().getExtras();
 		action = bundle.getString("action");
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
-
-		lvSpeeches = (ListView) findViewById(R.id.lvSpeeches);
-
-		speechList = bdh.getSpeechList();
-		List<String> titleList = new ArrayList<String>();
-
-		for (Speech speech : speechList) {
-			titleList.add(speech.getTitle());
-		}
-
-		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
-		
-		lvSpeeches.setAdapter(adaptador);
+		cargaLista();
 		
 		
 		lvSpeeches.setOnItemClickListener(new OnItemClickListener() {
@@ -76,5 +68,34 @@ public class SpeechListActivity extends Activity {
 		});
 		
 	}
+	
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		Log.d(TAG, "onResume()");
+		cargaLista();
+	}
+	
+	
+	public void cargaLista(){
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
 
+		speechList = bdh.getSpeechList();
+		
+		if(speechList.isEmpty()){
+			Toast.makeText(context, "No hay ningún discurso.", Toast.LENGTH_SHORT).show();
+			finish();
+		}
+		
+		List<String> titleList = new ArrayList<String>();
+
+		for (Speech speech : speechList) {
+			titleList.add(speech.getTitle());
+		}
+
+		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
+		
+		lvSpeeches.setAdapter(adaptador);
+	}
 }

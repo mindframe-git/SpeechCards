@@ -31,5 +31,8 @@
  	<!-- TextViews -->
  	<string name="tvTitle">Título del discurso:</string>
  	<string name="btnEditSpeechd">sdfsd</string>
+ 	
+ 	<!-- Menus -->
+ 	<string name="mnDel">Borrar discurso</string>
     
 </resources>

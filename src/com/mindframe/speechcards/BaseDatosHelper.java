@@ -317,5 +317,24 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	}
 	
 	
+	/**
+	 * 1º Se borran las tarjetas asociadas al discurso
+	 * 2º Se borra el discurso
+	 * 
+	 * @param id_speech
+	 */
+	public void deleteSpeech(int id_speech) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		String whereClauseCard = cardColumns.ID_SPEECH +  " = " + id_speech; 
+		String whereClauseSpeech = speechColums._ID + " = " + id_speech;
+		
+		db.delete(TABLE_NAME_CARD, whereClauseCard, null);
+		db.delete(TABLE_NAME_SPEECH, whereClauseSpeech, null);
+		
+		db.close();
+	}
+	
+	
 	
 }

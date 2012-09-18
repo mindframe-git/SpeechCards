@@ -3,9 +3,17 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -70,8 +78,6 @@ public class EditSpeechActivity extends Activity {
 		cardList = bdh.getCardsByIdSpeech(id_speech);
 		
 		if(cardList.isEmpty()){
-//			Toast.makeText(context, "El discurso no tiene tarjetas.", Toast.LENGTH_SHORT).show();
-//			finish();
 			currentCard = null;
 			etHeader.setText("");
 			etBody.setText("");
@@ -94,10 +100,10 @@ public class EditSpeechActivity extends Activity {
 		
 		btnNextCard.setOnClickListener(new OnClickListener() {
 			
+			@SuppressLint("ParserError")
 			@Override
 			public void onClick(View v) {
 				getNextCard();
-				
 			}
 		});
 		
@@ -294,4 +300,53 @@ public class EditSpeechActivity extends Activity {
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		MenuInflater inflater = getMenuInflater();
+
+		inflater.inflate(R.menu.menu_edit, menu);
+		return true;
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case R.id.mnDel:
+			crearDialogoConfirmacion();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+
+		}
+	}
+	
+	private Dialog crearDialogoConfirmacion() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Confirmacion");
+		builder.setMessage("¿Desea borrar el discurso actual? La acción no se podrá deshacer.");
+		builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				bdh.deleteSpeech(id_speech);
+				Toast.makeText(context, "Discurso borrado.", Toast.LENGTH_SHORT).show();
+				dialog.cancel();
+				finish();
+			}
+		});
+		builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		return builder.show();
+	}
+
+	
+	
+	
+	
 }
