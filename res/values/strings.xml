@@ -33,6 +33,8 @@
  	<string name="btnEditSpeechd">sdfsd</string>
  	
  	<!-- Menus -->
- 	<string name="mnDel">Borrar discurso</string>
+ 	<string name="mnDelSpeech">Borrar discurso</string>
+ 	<string name="mnDelCard">Borrar tarjeta</string>
+ 	<string name="mnAddCard">Añadir tarjeta</string>
     
 </resources>

@@ -315,10 +315,17 @@ public class EditSpeechActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.mnDel:
+		case R.id.mnDelSpeech:
 			crearDialogoConfirmacion();
 			return true;
+		
+		case R.id.mnAddCard:
+			
+			return true;
 
+		case R.id.mnDelCard:
+			
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 
