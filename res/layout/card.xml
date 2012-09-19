@@ -40,7 +40,9 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvTitulo"
         android:layout_marginTop="23dp"
+        android:focusable="true"
         android:maxLines="8"
+        android:scrollbars="vertical"
         android:text="TextView"
         android:textSize="20dp" />
 

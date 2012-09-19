@@ -30,6 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:ellipsize="end"
+        android:maxLength="20"
         android:layout_below="@+id/textView1"
         android:ems="10" >
 
@@ -54,10 +56,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView2"
-        android:ems="10"
+        android:ems="8"
         android:inputType="textMultiLine"
-        android:lines="8"
-        android:maxLines="8"
         android:minEms="11" />
 
     <Button

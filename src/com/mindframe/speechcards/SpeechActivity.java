@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -40,6 +41,8 @@ public class SpeechActivity extends Activity {
 		btnPrev = (Button)findViewById(R.id.btnPrev);
 		tvTitulo = (TextView)findViewById(R.id.tvTitulo);
 		tvCuerpo = (TextView)findViewById(R.id.tvCuerpo);
+		
+		tvCuerpo.setMovementMethod(new ScrollingMovementMethod());
 		
 		cardList = new ArrayList<Card>();
 		context = this.getApplicationContext();
@@ -132,6 +135,9 @@ public class SpeechActivity extends Activity {
 					text = text.replaceFirst("_", "</i>");
 				
 				openItalic = !openItalic;
+			}
+			if(x.compareToIgnoreCase("\n")==0){
+				text = text.replaceFirst("\n", "<br>");
 			}
 		}
 		

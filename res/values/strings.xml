@@ -25,8 +25,8 @@
  	
  	
  	<!-- EditTexts -->
- 	<string name="etHeader">Cabecera...</string>
- 	<string name="etBody">Texto...</string>
+ 	<string name="etHeader">Cabecera:</string>
+ 	<string name="etBody">Texto:</string>
  	
  	<!-- TextViews -->
  	<string name="tvTitle">Título del discurso:</string>
