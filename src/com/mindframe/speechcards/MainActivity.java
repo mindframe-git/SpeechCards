@@ -16,7 +16,7 @@ import android.widget.Spinner;
 
 public class MainActivity extends Activity {
 
-	Button btnEditSpeech, btnPlaySpeech;
+	Button btnEditSpeech, btnPlaySpeech, btnNewSpeech;
 	Spinner spSpeechs;
 	BaseDatosHelper bdh;
 	Context context;
@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
 		context = this.getApplicationContext();
 		btnPlaySpeech = (Button) findViewById(R.id.btnPlaySpeech);
 		btnEditSpeech = (Button)findViewById(R.id.btnEditSpeech);
+		btnNewSpeech = (Button)findViewById(R.id.btnNewSpeech);
+		
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
 
 		btnPlaySpeech.setOnClickListener(new OnClickListener() {
@@ -61,8 +63,24 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, SpeechListActivity.class);				
 				
-				startActivity(new Intent(MainActivity.this, ChooseActivity.class));
+				Bundle bun = new Bundle();
+				bun.putString("action", "edit");
+				
+				intent.putExtras(bun);
+				
+				startActivity(intent);
+				
+			}
+		});
+		
+		btnNewSpeech.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, NewSpeechActivity.class));
+				
 			}
 		});
 

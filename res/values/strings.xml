@@ -10,7 +10,7 @@
     <string name="btnNext">Siguiente</string>
     <string name="btnPrev">Anterior</string>
  	<string name="btnNewSpeech">Nuevo Discurso</string>
- 	<string name="btnEditSpeech">Discursos</string>
+ 	<string name="btnEditSpeech">Editar discurso</string>
  	<string name="btnPlaySpeech">Reproducir Discurso</string>
  	<string name="btnPrevCard">Prev</string>
  	<string name="btnNextCard">Sig</string>

@@ -113,6 +113,7 @@ public class SpeechActivity extends Activity {
 	private Spanned formatText(String text){
 		
 		boolean openBold = true;
+		boolean openUnderLine = true;
 		boolean openItalic = true;
 		
 		for(int i = 0; i< text.length(); i++){
@@ -129,15 +130,24 @@ public class SpeechActivity extends Activity {
 			}
 			if(x.compareToIgnoreCase("_")==0){
 				
-				if(openItalic)
-					text = text.replaceFirst("_", "<i>");
+				if(openUnderLine)
+					text = text.replaceFirst("_", "<u>");
 				else
-					text = text.replaceFirst("_", "</i>");
+					text = text.replaceFirst("_", "</u>");
 				
-				openItalic = !openItalic;
+				openUnderLine = !openUnderLine;
 			}
 			if(x.compareToIgnoreCase("\n")==0){
 				text = text.replaceFirst("\n", "<br>");
+			}
+			if(x.compareToIgnoreCase("/")==0){
+				
+				if(openItalic)
+					text = text.replaceFirst("%", "<i>");
+				else
+					text = text.replaceFirst("%", "</i>");
+				
+				openItalic = !openItalic;
 			}
 		}
 		

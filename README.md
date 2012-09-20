@@ -1,4 +1,4 @@
 SpeechCards
 ===========
 
-Aplicación de Android para hacer "chuletas" para ayudarse en los discursos.
+Aplicación de Android para hacer tarjetas para ayudarse en los discursos, tomar apuntes, etc...
