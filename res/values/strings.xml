@@ -30,11 +30,15 @@
  	
  	<!-- TextViews -->
  	<string name="tvTitle">Título del discurso:</string>
- 	<string name="btnEditSpeechd">sdfsd</string>
- 	
+	<string name="tvHelp">Texto de la ayuda....
+	    a ver como sale xD</string>
+ 		
  	<!-- Menus -->
  	<string name="mnDelSpeech">Borrar discurso</string>
  	<string name="mnDelCard">Borrar tarjeta</string>
  	<string name="mnAddCard">Añadir tarjeta</string>
+ 	<string name="mnHelp">Ayuda</string>
+ 	<string name="mnEditSpeech">Editar</string>
+ 	
     
 </resources>

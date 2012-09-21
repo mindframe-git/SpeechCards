@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 public class NewSpeechActivity extends Activity {
 
-	Button btnNewSpeech;
+	ImageView btnNewSpeech;
 	EditText etNewSpeech;
 	Context context;
 	BaseDatosHelper bdh;
@@ -44,7 +44,7 @@ public class NewSpeechActivity extends Activity {
 		setContentView(R.layout.new_speech);
 
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
-		btnNewSpeech = (Button) findViewById(R.id.btnNewSpeech);
+		btnNewSpeech = (ImageView) findViewById(R.id.btnNewSpeech);
 		etNewSpeech = (EditText) findViewById(R.id.etNewSpeech);
 
 		btnNewSpeech.setOnClickListener(new OnClickListener() {

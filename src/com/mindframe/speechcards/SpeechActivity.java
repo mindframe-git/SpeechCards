@@ -5,10 +5,15 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -26,6 +31,10 @@ public class SpeechActivity extends Activity {
 	Context context;
 	List<Card> cardList;
 	Card currentCard;
+	
+	int id_speech;
+	String speechTitle;
+	
 	final String TAG = getClass().getName();
 		
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,7 @@ public class SpeechActivity extends Activity {
 		tvTitulo = (TextView)findViewById(R.id.tvTitulo);
 		tvCuerpo = (TextView)findViewById(R.id.tvCuerpo);
 		
+		//Habilitamos el scroll para el textView
 		tvCuerpo.setMovementMethod(new ScrollingMovementMethod());
 		
 		cardList = new ArrayList<Card>();
@@ -50,7 +60,8 @@ public class SpeechActivity extends Activity {
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
 		
 		Bundle bundle = getIntent().getExtras();
-		int id_speech =  bundle.getInt("id_speech");
+		id_speech =  bundle.getInt("id_speech");
+		speechTitle = bundle.getString("speechTitle");
 		
 		cardList = bdh.getCardsByIdSpeech(id_speech);
 		
@@ -94,6 +105,9 @@ public class SpeechActivity extends Activity {
 	}
 	
 	private void writeCard(Card card) {
+		//Al cargar la tarjeta ponemos el scroll al principio.
+		tvCuerpo.scrollTo(0, 0);
+		
 		if(card != null){
 			if(card.getHeader() != null)
 				tvTitulo.setText(card.getHeader());
@@ -116,6 +130,8 @@ public class SpeechActivity extends Activity {
 		boolean openUnderLine = true;
 		boolean openItalic = true;
 		
+		//Buscamos los caracteres especiales 
+		//y los sustituimos por el código html
 		for(int i = 0; i< text.length(); i++){
 			String x = text.substring(i, i+1);
 			if(x.compareToIgnoreCase("#")==0){
@@ -181,6 +197,49 @@ public class SpeechActivity extends Activity {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		MenuInflater inflater = getMenuInflater();
+
+		inflater.inflate(R.menu.speech_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mnEditSpeech:
+			//redirigimos a la página de edición de este menú
+			Bundle bun = new Bundle();
+			bun.putInt("id_speech", id_speech);
+			bun.putString("speechTitle", speechTitle);
+			Intent intent = new Intent(SpeechActivity.this, EditSpeechActivity.class);
+			intent.putExtras(bun);
+			startActivity(intent);
+			return true;
+		
+		default:
+			return super.onOptionsItemSelected(item);
+
+		}
+	}
+	
+	protected void onResume(){
+		super.onResume();
+		
+		Log.d(TAG, "onResume: id: " + id_speech);
+		cardList = bdh.getCardsByIdSpeech(id_speech);
+
+		if(cardList.isEmpty()){
+			Toast.makeText(context, "El discurso no tiene tarjetas.", Toast.LENGTH_SHORT).show();
+			finish();
+		}
+		
+		currentCard = getFirstCard();
+		writeCard(currentCard);
 	}
 	
 }

@@ -7,16 +7,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 public class MainActivity extends Activity {
 
-	Button btnEditSpeech, btnPlaySpeech, btnNewSpeech;
+	ImageView btnEditSpeech, btnPlaySpeech, btnNewSpeech;
 	Spinner spSpeechs;
 	BaseDatosHelper bdh;
 	Context context;
@@ -37,9 +40,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main_screen);
 
 		context = this.getApplicationContext();
-		btnPlaySpeech = (Button) findViewById(R.id.btnPlaySpeech);
-		btnEditSpeech = (Button)findViewById(R.id.btnEditSpeech);
-		btnNewSpeech = (Button)findViewById(R.id.btnNewSpeech);
+		btnPlaySpeech = (ImageView) findViewById(R.id.btnPlaySpeech);
+		btnEditSpeech = (ImageView)findViewById(R.id.btnEditSpeech);
+		btnNewSpeech = (ImageView)findViewById(R.id.btnNewSpeech);
 		
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
 
@@ -84,6 +87,28 @@ public class MainActivity extends Activity {
 			}
 		});
 
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		MenuInflater inflater = getMenuInflater();
+
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.mnHelp:
+			//Mostraremos página de ayuda e instrucciones
+			return true;
+		
+		default:
+			return super.onOptionsItemSelected(item);
+
+		}
 	}
 
 }
