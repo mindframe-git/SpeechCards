@@ -4,41 +4,64 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Speech Cards</string>
-    
-    
+
     <!-- Buttons -->
     <string name="btnNext">Siguiente</string>
     <string name="btnPrev">Anterior</string>
- 	<string name="btnNewSpeech">Nuevo Discurso</string>
- 	<string name="btnEditSpeech">Editar discurso</string>
- 	<string name="btnPlaySpeech">Reproducir Discurso</string>
- 	<string name="btnPrevCard">Prev</string>
- 	<string name="btnNextCard">Sig</string>
- 	<string name="btnAddCard">Añadir</string>
- 	<string name="btnDeleteCard">Borrar</string>
- 	<string name="btnEnd">Terminar</string>
- 	<string name="btnMod">Guardar</string>
- 	<string name="btnList">Lista de Discursos</string>
- 	
- 		
- 	
- 	
- 	
- 	<!-- EditTexts -->
- 	<string name="etHeader">Cabecera:</string>
- 	<string name="etBody">Texto:</string>
- 	
- 	<!-- TextViews -->
- 	<string name="tvTitle">Título del discurso:</string>
-	<string name="tvHelp">Texto de la ayuda....
-	    a ver como sale xD</string>
- 		
- 	<!-- Menus -->
- 	<string name="mnDelSpeech">Borrar discurso</string>
- 	<string name="mnDelCard">Borrar tarjeta</string>
- 	<string name="mnAddCard">Añadir tarjeta</string>
- 	<string name="mnHelp">Ayuda</string>
- 	<string name="mnEditSpeech">Editar</string>
- 	
-    
+    <string name="btnNewSpeech">Nuevo Discurso</string>
+    <string name="btnEditSpeech">Editar discurso</string>
+    <string name="btnPlaySpeech">Reproducir Discurso</string>
+    <string name="btnPrevCard">Prev</string>
+    <string name="btnNextCard">Sig</string>
+    <string name="btnAddCard">Añadir</string>
+    <string name="btnDeleteCard">Borrar</string>
+    <string name="btnEnd">Terminar</string>
+    <string name="btnMod">Guardar</string>
+    <string name="btnList">Lista de Discursos</string>
+
+    <!-- EditTexts -->
+    <string name="etHeader">Cabecera:</string>
+    <string name="etBody">Texto:</string>
+
+    <!-- TextViews -->
+    <string name="tvTitle">Título del discurso:</string>
+    <string name="tvHelp">
+        <![CDATA[
+       	<b><u>Edición</u></b>
+       	<br>
+       	-Para agregar la primera tarjeta, simplemente escribir la cabecera y el cuerpo y pulsar en guardar.
+       	<br>
+       	-Para añadir una tarjeta, pulsar en menu, "Añadir tarjeta", rellenar los campos y pulsar en guardar.
+       	<br>
+       	-Puedes borrar la tarjeta actual pulsando en la opción "Borrar" del menú.
+       	<br>
+       	-Cuando pulses "Añadir tarjeta" se añadirá después de la tarjeta actual.
+       	<br>
+       	-El botón "Borrar discurso" borrará completamente el discurso actual y todas sus tarjetas.
+       	<br><br><br>
+        <b><u>Formatear textos</u></b>
+        <br>
+        Cuando edites una tarjeta, puedes formatear el texto de la siguiente manera:
+        <br><br>
+        <i>-Negritas</i>
+        <br>Para resaltar algo en <b>negrita</b> pon el texto que quieras resaltar #entre almohadillas#
+        <br><br>
+        <i>-Subrayado</i>
+        <br>Para <u>subrayar,</u> pon el texto que quieras _entre guiones bajos_
+        <br><br>
+        <i>-Cursivas</i>
+        <br>Si quieres poner el texto <i>en cursivas</i>, usa los %símbolos de porcentaje%]]></string>
+
+    <!-- Menus -->
+    <string name="mnDelSpeech">Borrar discurso</string>
+    <string name="mnDelCard">Borrar tarjeta</string>
+    <string name="mnAddCard">Añadir tarjeta</string>
+    <string name="mnHelp">Ayuda</string>
+    <string name="mnEditSpeech">Editar</string>
+
+    <!-- Toasts -->
+    <string name="toastVoidBody">Debe escribir algo en el cuerpo.</string>
+    <string name="toastAddCard">Se ha añadido la tarjeta.</string>
+    <string name="toastFisrtCard">Se encuentra en la primera tarjeta.</string>
+
 </resources>

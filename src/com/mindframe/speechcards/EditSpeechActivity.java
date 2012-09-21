@@ -10,6 +10,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -115,13 +117,13 @@ public class EditSpeechActivity extends Activity {
 					if (etBody.getText().toString().trim().compareToIgnoreCase("") != 0) {
 						int idNewCard = bdh.addCard(card, true);
 						addingCard = false;
-						Toast.makeText(context, "Se ha añadido la tarjeta.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, R.string.toastAddCard, Toast.LENGTH_SHORT).show();
 
 						cardList = bdh.getCardsByIdSpeech(id_speech);
 
 						currentCard = getCardById(idNewCard);
 					} else {
-						Toast.makeText(context, "Debe escribir algo en el cuerpo.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, R.string.toastVoidBody, Toast.LENGTH_SHORT).show();
 					}
 
 				} else {
@@ -134,7 +136,7 @@ public class EditSpeechActivity extends Activity {
 								Toast.makeText(context, "Algo ha fallado :S", Toast.LENGTH_SHORT).show();
 							}
 						} else {
-							Toast.makeText(context, "Debe escribir algo en el cuerpo.", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, R.string.toastVoidBody, Toast.LENGTH_SHORT).show();
 						}
 					} else {
 						// No hay tarjetas y vamos a añadir la primera.
@@ -152,17 +154,16 @@ public class EditSpeechActivity extends Activity {
 							cardList = bdh.getCardsByIdSpeech(id_speech);
 							currentCard = getFirstCard();
 
-							Toast.makeText(context, "Tarjeta agregada.", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, R.string.toastAddCard, Toast.LENGTH_SHORT).show();
 
 						} else {
-							Toast.makeText(context, "Debe escribir algo en el cuerpo.", Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, R.string.toastVoidBody, Toast.LENGTH_SHORT).show();
 						}
 					}
 				}
 
 			}
 		});
-	
 
 	}
 
@@ -205,7 +206,7 @@ public class EditSpeechActivity extends Activity {
 	private void getPrevCard() {
 		if (currentCard != null) {
 			if (currentCard.isFirst()) {
-				Toast.makeText(context, "Se encuentra en la primera tarjeta.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.toastFisrtCard, Toast.LENGTH_SHORT).show();
 			} else {
 				for (Card card : cardList) {
 					if (card.id_card == currentCard.getId_prev_card()) {
@@ -283,6 +284,22 @@ public class EditSpeechActivity extends Activity {
 			} else {
 				Toast.makeText(context, "No hay tarjetas.", Toast.LENGTH_SHORT).show();
 			}
+			return true;
+
+		case R.id.mnHelp:
+			// Mostraremos página de ayuda e instrucciones
+
+			Dialog dialog = new Dialog(EditSpeechActivity.this);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.help);
+			dialog.setCancelable(true);
+
+			TextView text = (TextView) dialog.findViewById(R.id.tvHelp);
+			text.setText(Html.fromHtml(getString(R.string.tvHelp)));
+			text.setMovementMethod(new ScrollingMovementMethod());
+
+			dialog.show();
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

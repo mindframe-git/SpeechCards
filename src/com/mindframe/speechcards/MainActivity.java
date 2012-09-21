@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -88,27 +92,4 @@ public class MainActivity extends Activity {
 		});
 
 	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		MenuInflater inflater = getMenuInflater();
-
-		inflater.inflate(R.menu.main_menu, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.mnHelp:
-			//Mostraremos página de ayuda e instrucciones
-			return true;
-		
-		default:
-			return super.onOptionsItemSelected(item);
-
-		}
-	}
-
 }

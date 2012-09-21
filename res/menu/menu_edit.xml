@@ -4,5 +4,6 @@
     <item android:id="@+id/mnAddCard" android:title="@string/mnAddCard" android:icon="@android:drawable/ic_menu_add"></item>
     <item android:id="@+id/mnDelSpeech" android:title="@string/mnDelSpeech" android:icon="@android:drawable/ic_menu_delete"></item>
     <item android:id="@+id/mnDelCard" android:title="@string/mnDelCard" android:icon="@android:drawable/ic_menu_close_clear_cancel"></item>
+    <item android:id="@+id/mnHelp" android:title="@string/mnHelp" android:icon="@android:drawable/ic_menu_help"></item>
 
 </menu>

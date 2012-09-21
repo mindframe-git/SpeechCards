@@ -187,7 +187,7 @@ public class SpeechActivity extends Activity {
 	
 	private void getPrevCard(){
 		if(currentCard.isFirst()){
-			Toast.makeText(context, "Se encuentra en la primera tarjeta.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context,  R.string.toastFisrtCard, Toast.LENGTH_SHORT).show();
 		}else{
 			for(Card card : cardList){
 				if(card.id_card == currentCard.getId_prev_card()){
