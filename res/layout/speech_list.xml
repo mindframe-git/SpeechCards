@@ -8,10 +8,12 @@
     <ListView
         android:id="@+id/lvSpeeches"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" 
         android:layout_gravity="center_horizontal"
         android:background="#F1ECC0"
         android:cacheColorHint="#F1ECC0"
-        android:divider="@drawable/lines" />
+        android:divider="@drawable/lines" 
+        />
+       
 
 </LinearLayout>

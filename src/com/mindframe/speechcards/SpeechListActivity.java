@@ -94,7 +94,9 @@ public class SpeechListActivity extends Activity {
 			titleList.add(speech.getTitle());
 		}
 
-		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
+//		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
+		
+		ListAdapter adaptador = new ListAdapter(context, R.layout.linelist, speechList);
 		
 		lvSpeeches.setAdapter(adaptador);
 	}
