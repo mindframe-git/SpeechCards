@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -69,7 +68,6 @@ public class SpeechListActivity extends Activity {
 		
 	}
 	
-	
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -77,14 +75,13 @@ public class SpeechListActivity extends Activity {
 		cargaLista();
 	}
 	
-	
 	public void cargaLista(){
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
 
 		speechList = bdh.getSpeechList();
 		
 		if(speechList.isEmpty()){
-			Toast.makeText(context, "No hay ningún discurso.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.toastNoSpeech, Toast.LENGTH_SHORT).show();
 			finish();
 		}
 		
@@ -93,8 +90,6 @@ public class SpeechListActivity extends Activity {
 		for (Speech speech : speechList) {
 			titleList.add(speech.getTitle());
 		}
-
-//		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
 		
 		ListAdapter adaptador = new ListAdapter(context, R.layout.linelist, speechList);
 		

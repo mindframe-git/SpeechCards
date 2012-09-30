@@ -30,7 +30,7 @@ import android.widget.Toast;
  * 
  *         Esta clase cargará en la plantilla de edición las tarjetas
  *         pertenecientes a un discurso, puede navegar entre ellas, añadir,
- *         modificar y borrar tarjetas.
+ *         modificar y borrar tarjetas y discursos.
  * 
  */
 public class EditSpeechActivity extends Activity {
@@ -95,7 +95,6 @@ public class EditSpeechActivity extends Activity {
 
 		btnNextCard.setOnClickListener(new OnClickListener() {
 
-			@SuppressLint("ParserError")
 			@Override
 			public void onClick(View v) {
 				getNextCard();
@@ -130,10 +129,10 @@ public class EditSpeechActivity extends Activity {
 					if (currentCard != null && !addingCard) {
 						if (etBody.getText().toString().trim().compareToIgnoreCase("") != 0) {
 							if (bdh.modCard(currentCard, etHeader.getText().toString(), etBody.getText().toString())) {
-								Toast.makeText(context, "Se ha actualizado la tarjeta.", Toast.LENGTH_SHORT).show();
+								Toast.makeText(context, R.string.toastUpdateCard, Toast.LENGTH_SHORT).show();
 								cardList = bdh.getCardsByIdSpeech(id_speech);
 							} else {
-								Toast.makeText(context, "Algo ha fallado :S", Toast.LENGTH_SHORT).show();
+								Toast.makeText(context, R.string.toastFail, Toast.LENGTH_SHORT).show();
 							}
 						} else {
 							Toast.makeText(context, R.string.toastVoidBody, Toast.LENGTH_SHORT).show();
@@ -187,7 +186,7 @@ public class EditSpeechActivity extends Activity {
 	private void getNextCard() {
 		if (currentCard != null) {
 			if (currentCard.isLast()) {
-				Toast.makeText(context, "No hay más tarjetas.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.toastNoMoreCards, Toast.LENGTH_SHORT).show();
 			} else {
 				for (Card card : cardList) {
 					if (card.getId_card() == currentCard.getId_next_card()) {
@@ -198,7 +197,7 @@ public class EditSpeechActivity extends Activity {
 				}
 			}
 		} else {
-			Toast.makeText(context, "No hay tarjetas.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -217,7 +216,7 @@ public class EditSpeechActivity extends Activity {
 				}
 			}
 		} else {
-			Toast.makeText(context, "No hay tarjetas.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -259,13 +258,13 @@ public class EditSpeechActivity extends Activity {
 				int result = bdh.delCard(currentCard);
 
 				if (result != 1) {
-					Toast.makeText(context, "Algo ha fallado :S", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.toastFail, Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(context, "Tarjeta borrada.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.toastDelCard, Toast.LENGTH_SHORT).show();
 
 					if (currentCard.isFirst() && currentCard.isLast()) {
 						// Es la última tarjeta
-						Toast.makeText(context, "No hay más tarjetas.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, R.string.toastNoMoreCards, Toast.LENGTH_SHORT).show();
 						etBody.setText("");
 						etHeader.setText("");
 						currentCard = null;
@@ -282,7 +281,7 @@ public class EditSpeechActivity extends Activity {
 					}
 				}
 			} else {
-				Toast.makeText(context, "No hay tarjetas.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
 			}
 			return true;
 
@@ -309,17 +308,17 @@ public class EditSpeechActivity extends Activity {
 
 	private Dialog crearDialogoConfirmacion() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Confirmacion");
-		builder.setMessage("¿Desea borrar el discurso actual? La acción no se podrá deshacer.");
-		builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+		builder.setTitle(R.string.dialTitle);
+		builder.setMessage(R.string.dialMessage);
+		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				bdh.deleteSpeech(id_speech);
-				Toast.makeText(context, "Discurso borrado.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.toastDelSpeech, Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				finish();
 			}
 		});
-		builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(R.string.dialCancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
 			}

@@ -66,7 +66,7 @@ public class SpeechActivity extends Activity {
 		cardList = bdh.getCardsByIdSpeech(id_speech);
 		
 		if(cardList.isEmpty()){
-			Toast.makeText(context, "El discurso no tiene tarjetas.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
 			finish();
 		}
 		
@@ -173,7 +173,7 @@ public class SpeechActivity extends Activity {
 	
 	private void getNextCard(){
 		if(currentCard.isLast()){
-			Toast.makeText(context, "No hay más tarjetas.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.toastNoMoreCards, Toast.LENGTH_SHORT).show();
 		}else{
 			for(Card card : cardList){
 				if(card.getId_card() == currentCard.getId_next_card()){
@@ -234,7 +234,7 @@ public class SpeechActivity extends Activity {
 		cardList = bdh.getCardsByIdSpeech(id_speech);
 
 		if(cardList.isEmpty()){
-			Toast.makeText(context, "El discurso no tiene tarjetas.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
 			finish();
 		}
 		

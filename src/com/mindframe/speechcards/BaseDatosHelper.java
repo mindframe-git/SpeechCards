@@ -10,7 +10,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-
+/**
+ * 
+ * Crea la base de datos y realiza 
+ * todas las operaciones entre la bdd y la app
+ * 
+ * 
+ * @author mindframe
+ *
+ */
 public class BaseDatosHelper extends SQLiteOpenHelper {
 
 	String SQL_CREATE_SPEECH = "create table speech (id_speech integer, title text)";
@@ -265,7 +273,8 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		
 		if(result != 1)
 			return false;
-		else return true;
+		else 
+			return true;
 	}
 
 	

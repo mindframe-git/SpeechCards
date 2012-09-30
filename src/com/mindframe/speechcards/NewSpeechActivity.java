@@ -20,8 +20,8 @@ import android.widget.Toast;
  * 
  *         Esta actividad se dedica a coger crear una entrada de base de datos
  *         con el nombre del discurso. Si ya existe, se muestra un mensaje de
- *         error. Si está va- cío se avisa. Si todo está correcto, se pasa a la
- *         nueva actividad para añadir hojas.
+ *         error. Si está vacío se avisa. Si todo está correcto, se pasa a la
+ *         nueva actividad para añadir tarjetas.
  */
 
 public class NewSpeechActivity extends Activity {
@@ -53,7 +53,7 @@ public class NewSpeechActivity extends Activity {
 			public void onClick(View v) {
 				String speechTitle = etNewSpeech.getText().toString();
 				if (speechTitle == null || speechTitle.trim().compareToIgnoreCase("") == 0) {
-					Toast.makeText(context, "Debe introducir un nombre", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
 				} else {
 					if (!bdh.existsSpeech(speechTitle)) {
 						int id_speech;
@@ -70,7 +70,7 @@ public class NewSpeechActivity extends Activity {
 						startActivity(intent);
 
 					} else {
-						Toast.makeText(context, "Ya existe un discurso con ese nombre", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, R.string.toastExistsSpeech, Toast.LENGTH_SHORT).show();
 					}
 				}
 			}
