@@ -42,17 +42,20 @@ public class EditSpeechActivity extends Activity {
 	EditText etHeader, etBody;
 	Button btnPrevCard, btnNextCard, btnMod;
 	int id_speech;
+//	RelativeLayout pantalla;
 	boolean addingCard;
+	
+	final String TAG = getClass().getName();
 
 	public void onCreate(Bundle savedInstanceState) {
 
 		getWindowManager().getDefaultDisplay().getHeight();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.edit_speech);
-
+		
 		tvTitleSpeech = (TextView) findViewById(R.id.tvTitleSpeech);
 		etHeader = (EditText) findViewById(R.id.etHeader);
 		etBody = (EditText) findViewById(R.id.etBody);
@@ -63,7 +66,7 @@ public class EditSpeechActivity extends Activity {
 		cardList = new ArrayList<Card>();
 		context = this.getApplicationContext();
 
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 		addingCard = false;
 
 		Bundle bundle = getIntent().getExtras();
@@ -127,7 +130,7 @@ public class EditSpeechActivity extends Activity {
 				} else {
 					if (currentCard != null && !addingCard) {
 						if (etBody.getText().toString().trim().compareToIgnoreCase("") != 0) {
-							if (bdh.modCard(currentCard, etHeader.getText().toString(), etBody.getText().toString())) {
+							if (bdh.updateCard(currentCard, etHeader.getText().toString(), etBody.getText().toString())) {
 								Toast.makeText(context, R.string.toastUpdateCard, Toast.LENGTH_SHORT).show();
 								cardList = bdh.getCardsByIdSpeech(id_speech);
 							} else {

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +34,6 @@ public class SpeechListActivity extends Activity {
 
 		getWindowManager().getDefaultDisplay().getHeight();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.speech_list);
@@ -52,13 +55,14 @@ public class SpeechListActivity extends Activity {
 				Bundle bun = new Bundle();
 				bun.putInt("id_speech", speechList.get(arg2).id_speech);
 				bun.putString("speechTitle", speechList.get(arg2).title);
+				bun.putString("action", action);
 				
 				if(action.compareToIgnoreCase("play") == 0){
 					Intent intent = new Intent(new Intent(SpeechListActivity.this, SpeechActivity.class));
 					intent.putExtras(bun);
 					startActivity(intent);
 				}else if(action.compareToIgnoreCase("edit") == 0){
-					Intent intent = new Intent(new Intent(SpeechListActivity.this, EditSpeechActivity.class));
+					Intent intent = new Intent(new Intent(SpeechListActivity.this, ManageSpeechActivity.class));
 					intent.putExtras(bun);
 					startActivity(intent);
 				}
@@ -66,7 +70,42 @@ public class SpeechListActivity extends Activity {
 			}
 		});
 		
+		lvSpeeches.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				
+				crearDialogoConfirmacion(arg2);
+				
+				return false;
+			}
+		});
+		
 	}
+	
+	
+	private Dialog crearDialogoConfirmacion(final int position) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.dialTitle);
+		builder.setMessage(R.string.dialMessage);
+		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				bdh.deleteSpeech(speechList.get(position).id_speech);
+				Toast.makeText(context, R.string.toastDelCard, Toast.LENGTH_SHORT).show();
+				cargaLista();
+				dialog.cancel();
+			}
+		});
+		builder.setNegativeButton(R.string.dialCancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		
+		return builder.show();
+	}
+	
 	
 	@Override
 	public void onResume(){
@@ -76,19 +115,13 @@ public class SpeechListActivity extends Activity {
 	}
 	
 	public void cargaLista(){
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 
 		speechList = bdh.getSpeechList();
 		
 		if(speechList.isEmpty()){
 			Toast.makeText(context, R.string.toastNoSpeech, Toast.LENGTH_SHORT).show();
 			finish();
-		}
-		
-		List<String> titleList = new ArrayList<String>();
-
-		for (Speech speech : speechList) {
-			titleList.add(speech.getTitle());
 		}
 		
 		ListAdapter adaptador = new ListAdapter(context, R.layout.linelist, speechList);

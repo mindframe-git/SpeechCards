@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/plantilla" >
+    android:layout_height="match_parent" >
 
     <Button
         android:id="@+id/btnNext"
@@ -27,9 +26,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:maxLines="1"
-        android:text="Título:"
         android:textColor="#000000"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:typeface="monospace" />
 
     <TextView
         android:id="@+id/tvCuerpo"
@@ -43,7 +42,36 @@
         android:focusable="true"
         android:maxLines="8"
         android:scrollbars="vertical"
-        android:text="TextView"
-        android:textSize="20dp" />
+        android:textSize="20dp" 
+        android:typeface="monospace"/>
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvTitulo"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/linestrans" />
+
+    <SeekBar
+        android:id="@+id/sbTamano"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:max="50"
+        android:layout_toLeftOf="@+id/btnNext"
+        android:layout_toRightOf="@+id/btnPrev" />
+
+    <TextView
+        android:id="@+id/tvTamano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sbTamano"
+        android:layout_centerHorizontal="true"
+        android:text="Tamaño del texto" />
+    
 </RelativeLayout>

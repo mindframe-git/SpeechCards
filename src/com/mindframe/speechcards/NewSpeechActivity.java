@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -28,60 +32,94 @@ public class NewSpeechActivity extends Activity {
 
 	ImageView btnNewSpeech;
 	EditText etNewSpeech;
+	TextView tvTamano, tvTitle;
 	Context context;
+	int textSize;
 	BaseDatosHelper bdh;
+	
+	
 	final String TAG = getClass().getName();
+	boolean grabado;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		getWindowManager().getDefaultDisplay().getHeight();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		super.onCreate(savedInstanceState);
 		context = this.getApplicationContext();
 		setContentView(R.layout.new_speech);
+		
+		//El tamaño de texto predeterminado es 20
+		textSize = 20;
 
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 		btnNewSpeech = (ImageView) findViewById(R.id.btnNewSpeech);
+		tvTamano = (TextView)findViewById(R.id.tvTamano);
 		etNewSpeech = (EditText) findViewById(R.id.etNewSpeech);
+		tvTitle = (TextView)findViewById(R.id.tvTitle);
+		
+		tvTitle.setText("Nueva Colección");
+		
+		
+		// Al pulsar enter, se crea la colección
+		grabado = false;
+		etNewSpeech.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					if(!grabado){
+						nuevaColeccion();
+						grabado = true;
+						return true;
+					}
+				}
+				return false;
+			}
+		});
 
 		btnNewSpeech.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				String speechTitle = etNewSpeech.getText().toString();
-				if (speechTitle == null || speechTitle.trim().compareToIgnoreCase("") == 0) {
-					Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
-				} else {
-					if (!bdh.existsSpeech(speechTitle)) {
-						int id_speech;
-						Bundle bun = new Bundle();
-
-						id_speech = bdh.newSpeech(speechTitle);
-
-						Intent intent = new Intent(NewSpeechActivity.this, EditSpeechActivity.class);
-						bun.putString("speechTitle", speechTitle);
-						bun.putInt("id_speech", id_speech);
-						bun.putInt("id_prev_card", -1);
-						intent.putExtras(bun);
-
-						startActivity(intent);
-
-					} else {
-						Toast.makeText(context, R.string.toastExistsSpeech, Toast.LENGTH_SHORT).show();
-					}
-				}
+				nuevaColeccion();
 			}
 		});
+		
+	}
+
+	public void nuevaColeccion() {
+		String speechTitle = etNewSpeech.getText().toString();
+		if (speechTitle == null || speechTitle.trim().compareToIgnoreCase("") == 0) {
+			Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
+		} else {
+			if (!bdh.existsSpeech(speechTitle)) {
+				int id_speech;
+				Bundle bun = new Bundle();
+
+				id_speech = bdh.newSpeech(speechTitle, textSize);
+
+				Intent intent = new Intent(NewSpeechActivity.this, ManageSpeechActivity.class);
+				bun.putString("speechTitle", speechTitle);
+				bun.putInt("id_speech", id_speech);
+				bun.putInt("id_prev_card", -1);
+				intent.putExtras(bun);
+
+				startActivity(intent);
+
+			} else {
+				Toast.makeText(context, R.string.toastExistsSpeech, Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 	
-	
 	@Override
-	public void onStop(){
+	public void onStop() {
 		super.onStop();
 		Log.d(TAG, "onStop");
 		finish();
 	}
+
 }

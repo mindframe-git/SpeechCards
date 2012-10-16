@@ -28,7 +28,7 @@ public class ListAdapter extends ArrayAdapter {
 		
 		TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		TextView tvNCard = (TextView)convertView.findViewById(R.id.tvNCard);
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 		
 		Speech speech = speechList.get(position);
 		

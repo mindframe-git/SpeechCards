@@ -29,16 +29,16 @@
             android:name="SpeechActivity"
             android:screenOrientation="landscape" >
         </activity>
-        <activity
-            android:name="SpeechListActivity" >
+        <activity android:name="SpeechListActivity" >
         </activity>
-        <activity
-            android:name="EditSpeechActivity" >
+        <activity android:name="EditSpeechActivity" >
         </activity>
-        <activity
-            android:name="ChooseActivity" >
+        <activity android:name="ChooseActivity" >
         </activity>
-        
+        <activity android:name="ManageSpeechActivity" >
+        </activity>
+        <activity android:name="EditCardActivity" >
+        </activity>
     </application>
 
 </manifest>

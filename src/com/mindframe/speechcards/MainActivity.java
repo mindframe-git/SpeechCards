@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
 
 		getWindowManager().getDefaultDisplay().getHeight();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_screen);
@@ -41,7 +40,7 @@ public class MainActivity extends Activity {
 		btnEditSpeech = (ImageView)findViewById(R.id.btnEditSpeech);
 		btnNewSpeech = (ImageView)findViewById(R.id.btnNewSpeech);
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 
 		btnPlaySpeech.setOnClickListener(new OnClickListener() {
 

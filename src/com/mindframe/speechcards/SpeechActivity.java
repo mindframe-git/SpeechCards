@@ -11,45 +11,40 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
-public class SpeechActivity extends Activity implements OnGestureListener {
+public class SpeechActivity extends Activity{
 
 	Button btnNext, btnPrev;
-	TextView tvTitulo, tvCuerpo;
+	TextView tvTitulo, tvCuerpo, tvTamano;
 	BaseDatosHelper bdh;
+	SeekBar sbTamano;
 	Context context;
 	List<Card> cardList;
 	Card currentCard;
 
-	int id_speech;
-	String speechTitle;
-	GestureDetector gestDect;
+	int id_speech, id_card, textSize;
+	String body;
+	String speechTitle, action;
 
 	final String TAG = getClass().getName();
 
-	private static final int SWIPE_MIN_DISTANCE = 120;
-	private static final int SWIPE_MAX_OFF_PATH = 250;
-	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
 	public void onCreate(Bundle savedInstanceState) {
 
 		getWindowManager().getDefaultDisplay().getHeight();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.card);
@@ -59,22 +54,103 @@ public class SpeechActivity extends Activity implements OnGestureListener {
 		btnPrev = (Button) findViewById(R.id.btnPrev);
 		tvTitulo = (TextView) findViewById(R.id.tvTitulo);
 		tvCuerpo = (TextView) findViewById(R.id.tvCuerpo);
-
+		tvTamano = (TextView)findViewById(R.id.tvTamano);
+		sbTamano = (SeekBar)findViewById(R.id.sbTamano);
+		
 		// Habilitamos el scroll para el textView
 		tvCuerpo.setMovementMethod(new ScrollingMovementMethod());
-
-		gestDect = new GestureDetector(this);
 
 		
 		cardList = new ArrayList<Card>();
 		context = this.getApplicationContext();
 
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 1);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 
 		Bundle bundle = getIntent().getExtras();
 		id_speech = bundle.getInt("id_speech");
 		speechTitle = bundle.getString("speechTitle");
+		id_card = bundle.getInt("id_card");
+		body = bundle.getString("body");
+		action = bundle.getString("action");
+		
+		textSize = bdh.getSpeechById(id_speech).size;
+		sbTamano.setProgress(textSize);
+		tvCuerpo.setTextSize(textSize);
+		
+		if(action.compareToIgnoreCase("play") == 0){
+			actionPlay();
+		}else if(action.compareToIgnoreCase("preview") == 0){
+			actionPreview();
+		}
+		
+		
 
+	}
+
+	private void actionPreview() {
+		btnPrev.setText(R.string.btnBack);
+		btnNext.setText(R.string.btnMod);
+		
+		currentCard = bdh.getCardById(id_card);
+		currentCard.body = body;
+		writeCard(currentCard);
+		
+		
+		sbTamano.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if(textSize == 0)
+					textSize=20;
+				textSize = progress;
+				tvCuerpo.setTextSize(textSize);
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+			}
+		
+		});
+		
+		btnPrev.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				
+			}
+		});
+		
+		btnNext.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				Speech speech = new Speech();
+				speech = bdh.getSpeechById(id_speech);
+				speech.setSize(textSize);
+				bdh.updateSpeech(speech);
+				
+				Toast.makeText(context, R.string.toastUpdateSize, Toast.LENGTH_SHORT).show();
+				
+			}
+		});
+		
+		
+		
+	}
+
+	private void actionPlay() {
+		
+		sbTamano.setVisibility(View.GONE);
+		tvTamano.setVisibility(View.GONE);
+		
 		cardList = bdh.getCardsByIdSpeech(id_speech);
 
 		if (cardList.isEmpty()) {
@@ -103,7 +179,6 @@ public class SpeechActivity extends Activity implements OnGestureListener {
 				writeCard(currentCard);
 			}
 		});
-
 	}
 
 	private Card getFirstCard() {
@@ -117,14 +192,14 @@ public class SpeechActivity extends Activity implements OnGestureListener {
 	private void writeCard(Card card) {
 		// Al cargar la tarjeta ponemos el scroll al principio.
 		tvCuerpo.scrollTo(0, 0);
-
+		
 		if (card != null) {
 			if (card.getHeader() != null)
 				tvTitulo.setText(card.getHeader());
 			if (card.getBody() != null) {
 				String body = card.getBody();
 
-				if (body.contains("#") || body.contains("_")) {
+				if (body.contains("#") || body.contains("_") || body.contains("%")) {
 					tvCuerpo.setText(formatText(body), BufferType.SPANNABLE);
 				} else {
 					tvCuerpo.setText(body);
@@ -224,9 +299,9 @@ public class SpeechActivity extends Activity implements OnGestureListener {
 		case R.id.mnEditSpeech:
 			// redirigimos a la página de edición de este menú
 			Bundle bun = new Bundle();
-			bun.putInt("id_speech", id_speech);
+			bun.putInt("id_card", currentCard.id_card);
 			bun.putString("speechTitle", speechTitle);
-			Intent intent = new Intent(SpeechActivity.this, EditSpeechActivity.class);
+			Intent intent = new Intent(SpeechActivity.this, EditCardActivity.class);
 			intent.putExtras(bun);
 			startActivity(intent);
 			return true;
@@ -237,58 +312,18 @@ public class SpeechActivity extends Activity implements OnGestureListener {
 		}
 	}
 
-	protected void onResume() {
-		super.onResume();
-
-		Log.d(TAG, "onResume: id: " + id_speech);
-		cardList = bdh.getCardsByIdSpeech(id_speech);
-
-		if (cardList.isEmpty()) {
-			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
-			finish();
-		}
-
-		currentCard = getFirstCard();
-		writeCard(currentCard);
-	}
-	@Override
-	public boolean onTouchEvent(MotionEvent me) {
-		return gestDect.onTouchEvent(me);
-	}
-
-	@Override
-	public boolean onDown(MotionEvent arg0) {
-		Log.d(TAG, "onDown");
-		return false;
-	}
-
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		Log.d(TAG, "onFling");
-		return false;
-
-	}
-
-	@Override
-	public void onLongPress(MotionEvent e) {
-		Log.d(TAG, "onLongPress");
-
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		return false;
-	}
-
-	@Override
-	public void onShowPress(MotionEvent e) {
-		Log.d(TAG, "onShowPress");
-
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		Log.d(TAG, "onSingleTapUp");
-		return false;
-	}
+//	protected void onResume() {
+//		super.onResume();
+//
+//		Log.d(TAG, "onResume: id: " + id_speech);
+//		cardList = bdh.getCardsByIdSpeech(id_speech);
+//
+//		if (cardList.isEmpty()) {
+//			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
+//			finish();
+//		}
+//
+//		currentCard = getFirstCard();
+//		writeCard(currentCard);
+//	}
 }

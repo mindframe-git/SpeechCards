@@ -29,6 +29,9 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 
 	public static class speechColums implements BaseColumns {
 		public static final String TITLE = "TITLE";
+		public static final String SIZE = "SIZE";
+		public static final String COLOR = "COLOR";
+		
 	}
 
 	public static class cardColumns implements BaseColumns {
@@ -45,12 +48,21 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		createTables(db);
+		// db.execSQL(SQL_CREATE_CARD);dddd
+		// db.execSQL(SQL_CREATE_SPEECH);
+	}
+	
+	public void createTables(SQLiteDatabase db){
+		
 		StringBuilder sb1 = new StringBuilder();
 		StringBuilder sb2 = new StringBuilder();
 
 		sb1.append("CREATE TABLE " + TABLE_NAME_SPEECH + " (");
 		sb1.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
-		sb1.append(speechColums.TITLE + " TEXT NOT NULL");
+		sb1.append(speechColums.TITLE + " TEXT NOT NULL, ");
+		sb1.append(speechColums.SIZE + " INTEGER, ");
+		sb1.append(speechColums.COLOR + " TEXT");
 		sb1.append(");");
 
 		sb2.append("CREATE TABLE " + TABLE_NAME_CARD + " (");
@@ -65,27 +77,27 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 
 		db.execSQL(sb1.toString());
 		db.execSQL(sb2.toString());
-
-		// db.execSQL(SQL_CREATE_CARD);dddd
-		// db.execSQL(SQL_CREATE_SPEECH);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS card");
-		db.execSQL("DROP TABLE IF EXISTS speech");
-
-		db.execSQL(SQL_CREATE_CARD);
-		db.execSQL(SQL_CREATE_SPEECH);
+		db.execSQL("ALTER TABLE SPEECH ADD SIZE TEXT");
+		db.execSQL("ALTER TABLE SPEECH ADD COLOR TEXT");
+		
+//		db.execSQL("DROP TABLE IF EXISTS card");
+//		db.execSQL("DROP TABLE IF EXISTS speech");
+//
+//		createTables(db);
 	}
 
-	public int newSpeech(String title) {
+	public int newSpeech(String title, int size) {
 		
 		int id_speech;
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues cv = new ContentValues();
 		cv.put(speechColums.TITLE, title.trim());
+		cv.put(speechColums.SIZE, size);
 		
 		id_speech = (int) db.insert(TABLE_NAME_SPEECH, null, cv);
 		db.close();
@@ -225,7 +237,8 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	public List<Card> getCardsByIdSpeech(int id_speech){
 		List<Card> cardList = new ArrayList<Card>();
 		
-		String[] columns = {cardColumns._ID, cardColumns.ID_SPEECH, cardColumns.ID_PREV_CARD, cardColumns.ID_NEXT_CARD, cardColumns.HEADER, cardColumns.BODY};
+		String[] columns = {cardColumns._ID, cardColumns.ID_SPEECH, cardColumns.ID_PREV_CARD, 
+							cardColumns.ID_NEXT_CARD, cardColumns.HEADER, cardColumns.BODY};
 		String[] args = {String.valueOf(id_speech)};
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -250,6 +263,51 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		return cardList;
 		
 	}
+	
+	public Speech getSpeechById(int id_speech){
+		Speech speech = new Speech();
+		
+		String[] columns = {speechColums.TITLE, speechColums.SIZE, speechColums.COLOR, speechColums._ID};
+		String[] args = {String.valueOf(id_speech)};
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor c = db.query(TABLE_NAME_SPEECH, columns, "_id=?", args, null, null, null, null);
+		if(c.moveToFirst()){
+			speech.title=c.getString(0);
+			speech.size = c.getInt(1);
+			speech.color = c.getString(2);
+			speech.id_speech = c.getInt(3);
+			
+		}while(c.moveToNext());
+
+		
+		db.close();
+		return speech;
+	}
+	
+	public Card getCardById(int id_card){
+		Card card = new Card();
+		
+		String[] columns = {cardColumns._ID, cardColumns.ID_SPEECH, cardColumns.BODY, cardColumns.HEADER, cardColumns.ID_NEXT_CARD, cardColumns.ID_PREV_CARD};
+		String[] args = {String.valueOf(id_card)};
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		Cursor c = db.query(TABLE_NAME_CARD, columns, "_id=?", args, null, null, null, null);
+		
+		if(c.moveToFirst()){
+			card.id_card =c.getInt(0);
+			card.id_speech =c.getInt(1);
+			card.body =c.getString(2);
+			card.header =c.getString(3);
+			card.id_next_card =c.getInt(4);
+			card.id_prev_card =c.getInt(5);
+			
+		}while(c.moveToNext());
+		
+		db.close();
+	
+		return card;
+	}
 
 	/**
 	 * Aquí recibiré una carta a la cual se le ha 
@@ -258,7 +316,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	 * @param Header 
 	 * @param Body 
 	 */
-	public boolean modCard(Card card, String header, String body) {
+	public boolean updateCard(Card card, String header, String body) {
 		int result = 0;
 		ContentValues val = new ContentValues();
 		val.put(cardColumns.HEADER, header);
@@ -275,6 +333,20 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 			return false;
 		else 
 			return true;
+	}
+	
+	public void updateSpeech(Speech speech){
+		ContentValues val = new ContentValues();
+		val.put(speechColums.TITLE, speech.title);
+		val.put(speechColums.SIZE, speech.size);
+		val.put(speechColums.COLOR, speech.color);
+		String whereClause = speechColums._ID + " =" + speech.id_speech;
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		db.update(TABLE_NAME_SPEECH, val, whereClause, null);
+		
+		db.close();
 	}
 
 	

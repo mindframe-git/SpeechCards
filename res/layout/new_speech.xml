@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/pnuevo" >
+    android:layout_height="match_parent" >
 
-    <EditText
-        android:id="@+id/etNewSpeech"
+    <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="108dp"
-        android:ems="10" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp"
+        android:typeface="monospace" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvTitle"
+        android:adjustViewBounds="true"
+        android:baselineAlignBottom="true"
+        android:cropToPadding="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/linestrans" />
 
     <ImageView
         android:id="@+id/btnNewSpeech"
@@ -21,5 +34,27 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:src="@drawable/btnnuevo" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="20dp"
+        android:text="@string/tvTitle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/etNewSpeech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btnNewSpeech"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:ems="10"
+        android:maxLength="20"
+        android:singleLine="true" />
 
 </RelativeLayout>

@@ -16,6 +16,7 @@
         android:text="@string/tvHelp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000000"
-        android:textColorHint="#000000" />
+        android:textColorHint="#000000" 
+        android:typeface="monospace"/>
 
 </RelativeLayout>

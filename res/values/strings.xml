@@ -18,10 +18,13 @@
     <string name="btnEnd">Terminar</string>
     <string name="btnMod">Guardar</string>
     <string name="btnList">Lista de colecciones</string>
+    <string name="btnBack">Volver</string>
+    <string name="btnPreview">Vista Previa</string>
 
     <!-- EditTexts -->
     <string name="etHeader">Cabecera:</string>
     <string name="etBody">Texto:</string>
+    <string name="AddCards">Añadir Tarjetas</string>
 
     <!-- TextViews -->
     <string name="tvTitle">Título de la colección:</string>
@@ -61,6 +64,7 @@
 
     <!-- Toasts -->
     <string name="toastVoidBody">Debe escribir algo en el cuerpo.</string>
+    <string name="toastVoidHeader">Debe escribir algo en la cabecera.</string>
     <string name="toastAddCard">Se ha añadido la tarjeta.</string>
     <string name="toastDelCard">Tarjeta borrada.</string>
     <string name="toastFisrtCard">Se encuentra en la primera tarjeta.</string>
@@ -69,14 +73,17 @@
     <string name="toastFail">Se ha producido un error.</string>
     <string name="toastUpdateCard">Se ha actualizado la tarjeta.</string>
     <string name="toastVoidName">Debe introducir un nombre.</string>
-    <string name="toastDelSpeech">Colección borrado.</string>
+    <string name="toastDelSpeech">Colección borrada.</string>
     <string name="toastExistsSpeech">Ya existe una colección con ese nombre.</string>
     <string name="toastNoSpeech">No hay ningúna colección.</string>
+    <string name="toastSaveCard">Se ha guardado la tarjeta.</string>
+    <string name="toastUpdateSize">Se ha actualizado el tamaño.</string>
     
     <!-- Dialogs -->
     <string name="dialTitle">Confirmacion</string>
     <string name="dialMessage">¿Desea borrar la colección actual? La acción no se podrá deshacer.</string>
     <string name="dialAcept">Aceptar</string>
     <string name="dialCancel">Cancelar</string>
+    
 
 </resources>
