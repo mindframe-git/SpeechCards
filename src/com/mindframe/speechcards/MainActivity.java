@@ -6,17 +6,22 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	ImageView btnEditSpeech, btnPlaySpeech, btnNewSpeech;
+//	ImageView btnEditSpeech, btnPlaySpeech, btnNewSpeech;
+	TextView tvTitleApp, tvNew, tvEdit, tvPlay;
 	Spinner spSpeechs;
 	BaseDatosHelper bdh;
 	Context context;
@@ -36,13 +41,22 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main_screen);
 
 		context = this.getApplicationContext();
-		btnPlaySpeech = (ImageView) findViewById(R.id.btnPlaySpeech);
-		btnEditSpeech = (ImageView)findViewById(R.id.btnEditSpeech);
-		btnNewSpeech = (ImageView)findViewById(R.id.btnNewSpeech);
+
+		tvTitleApp = (TextView)findViewById(R.id.tvTitleApp);
+		tvNew = (TextView)findViewById(R.id.tvNew);
+		tvEdit = (TextView)findViewById(R.id.tvEdit);
+		tvPlay = (TextView)findViewById(R.id.tvPlay);
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
+		tvTitleApp.setTypeface(font);
+		tvNew.setTypeface(font);
+		tvEdit.setTypeface(font);
+		tvPlay.setTypeface(font);
 		
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 
-		btnPlaySpeech.setOnClickListener(new OnClickListener() {
+		
+		tvPlay.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -58,7 +72,7 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		btnEditSpeech.setOnClickListener(new OnClickListener() {
+		tvEdit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -74,7 +88,7 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		btnNewSpeech.setOnClickListener(new OnClickListener() {
+		tvNew.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

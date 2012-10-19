@@ -311,7 +311,7 @@ public class EditSpeechActivity extends Activity {
 	private Dialog crearDialogoConfirmacion() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.dialTitle);
-		builder.setMessage(R.string.dialMessage);
+		builder.setMessage(R.string.dialMessageSpeech);
 		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				bdh.deleteSpeech(id_speech);

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -88,7 +87,7 @@ public class SpeechActivity extends Activity{
 	}
 
 	private void actionPreview() {
-		btnPrev.setText(R.string.btnBack);
+		btnPrev.setText(R.string.btnCancel);
 		btnNext.setText(R.string.btnMod);
 		
 		currentCard = bdh.getCardById(id_card);
@@ -102,6 +101,7 @@ public class SpeechActivity extends Activity{
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if(textSize == 0)
 					textSize=20;
+				
 				textSize = progress;
 				tvCuerpo.setTextSize(textSize);
 			}

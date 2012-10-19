@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -88,11 +87,11 @@ public class SpeechListActivity extends Activity {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.dialTitle);
-		builder.setMessage(R.string.dialMessage);
+		builder.setMessage(R.string.dialMessageSpeech);
 		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				bdh.deleteSpeech(speechList.get(position).id_speech);
-				Toast.makeText(context, R.string.toastDelCard, Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.toastDelSpeech, Toast.LENGTH_SHORT).show();
 				cargaLista();
 				dialog.cancel();
 			}

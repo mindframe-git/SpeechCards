@@ -3,6 +3,7 @@ package com.mindframe.speechcards;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,8 +13,6 @@ import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +29,8 @@ import android.widget.Toast;
 
 public class NewSpeechActivity extends Activity {
 
-	ImageView btnNewSpeech;
 	EditText etNewSpeech;
-	TextView tvTamano, tvTitle;
+	TextView tvTitle, tvNew, btnNewSpeech;
 	Context context;
 	int textSize;
 	BaseDatosHelper bdh;
@@ -55,10 +53,17 @@ public class NewSpeechActivity extends Activity {
 		textSize = 20;
 
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
-		btnNewSpeech = (ImageView) findViewById(R.id.btnNewSpeech);
-		tvTamano = (TextView)findViewById(R.id.tvTamano);
+		btnNewSpeech = (TextView) findViewById(R.id.btnNewSpeech);
 		etNewSpeech = (EditText) findViewById(R.id.etNewSpeech);
 		tvTitle = (TextView)findViewById(R.id.tvTitle);
+		tvNew = (TextView)findViewById(R.id.tvNew);
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
+		tvTitle.setTypeface(font);
+		tvNew.setTypeface(font);
+		btnNewSpeech.setTypeface(font);
+		etNewSpeech.setTypeface(font);
+		
 		
 		tvTitle.setText("Nueva Colección");
 		

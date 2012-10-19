@@ -3,6 +3,7 @@ package com.mindframe.speechcards;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,7 +11,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class EditCardActivity extends Activity{
 
@@ -40,6 +40,10 @@ public class EditCardActivity extends Activity{
 		etBody = (EditText)findViewById(R.id.etBody);
 		btnBack = (Button)findViewById(R.id.btnBack);
 		btnPreview = (Button)findViewById(R.id.btnPreview);
+		Typeface font = Typeface.createFromAsset(context.getAssets(), "FONT.TTF");
+		tvTitleSpeech.setTypeface(font);
+		etHeader.setTypeface(font);
+		etBody.setTypeface(font);
 		
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 		

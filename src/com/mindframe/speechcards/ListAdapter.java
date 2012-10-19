@@ -3,6 +3,7 @@ package com.mindframe.speechcards;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,11 @@ public class ListAdapter extends ArrayAdapter {
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 		
 		Speech speech = speechList.get(position);
+		
+		Typeface font = Typeface.createFromAsset(context.getAssets(), "FONT.TTF");
+		
+		tvTitle.setTypeface(font);
+		tvNCard.setTypeface(font);
 		
 		tvTitle.setText(speech.title);
 		List<Card> cardList = bdh.getCardsByIdSpeech(speech.id_speech);

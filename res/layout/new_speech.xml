@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:typeface="monospace" />
 
     <ImageView
@@ -26,17 +26,17 @@
         android:scaleType="fitXY"
         android:src="@drawable/linestrans" />
 
-    <ImageView
-        android:id="@+id/btnNewSpeech"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/btnnuevo" />
+<!--     <ImageView -->
+<!--         android:id="@+id/btnNewSpeech" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:layout_centerHorizontal="true" -->
+<!--         android:layout_marginBottom="30dp" -->
+<!--         android:src="@drawable/btnnuevo" /> -->
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -50,11 +50,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/btnNewSpeech"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tvNew"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:ems="10"
         android:maxLength="20"
         android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/btnNewSpeech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etNewSpeech"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="@string/btnAceptar"
+        android:textSize="40dp" />
 
 </RelativeLayout>

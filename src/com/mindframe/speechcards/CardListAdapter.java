@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +39,11 @@ public class CardListAdapter extends ArrayAdapter{
 		
 		final TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		final ImageView btnEdit = (ImageView)convertView.findViewById(R.id.btnEdit);
-		final ImageView btnRemove = (ImageView)convertView.findViewById(R.id.btnRemove);
+//		final ImageView btnRemove = (ImageView)convertView.findViewById(R.id.btnRemove);
 		tvTitle.setText(cardList.get(position).header);
 		
-
+		Typeface font = Typeface.createFromAsset(context.getAssets(), "FONT.TTF");
+		tvTitle.setTypeface(font);
 		
 		btnEdit.setOnClickListener(new OnClickListener() {
 			
@@ -58,19 +60,19 @@ public class CardListAdapter extends ArrayAdapter{
 			}
 		});
 		
-		
-		btnRemove.setOnClickListener(new OnClickListener() {
-			
-			@SuppressWarnings("unchecked")
-			@Override
-			public void onClick(View v) {
-				//TODO: hacer botón de confirmación para borrar tarjetas.
-				
-				bdh.delCard(cardList.get(position));
-				remove(cardList.get(position));
-				notifyDataSetChanged();
-			}
-		});
+//		
+//		btnRemove.setOnClickListener(new OnClickListener() {
+//			
+//			@SuppressWarnings("unchecked")
+//			@Override
+//			public void onClick(View v) {
+//				//TODO: hacer botón de confirmación para borrar tarjetas.
+//				
+//				bdh.delCard(cardList.get(position));
+//				remove(cardList.get(position));
+//				notifyDataSetChanged();
+//			}
+//		});
 		
 		
 		

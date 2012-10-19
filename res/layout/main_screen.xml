@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
+    android:layout_height="match_parent" >
+
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvTitleApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp"
+        android:text="@string/app_head"
+        android:textSize="42dp"
         android:typeface="monospace" />
 
     <ImageView
@@ -19,38 +19,41 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvTitle"
+        android:layout_below="@+id/tvTitleApp"
         android:adjustViewBounds="true"
         android:baselineAlignBottom="true"
         android:cropToPadding="true"
         android:scaleType="fitXY"
         android:src="@drawable/linestrans" />
 
-    <ImageView
-        android:id="@+id/btnNewSpeech"
+    <TextView
+        android:id="@+id/tvNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/btnnuevo" />
+        android:layout_marginTop="50dp"
+        android:text="@string/btnNewSpeech"
+        android:textSize="35dp" />
 
-    <ImageView
-        android:id="@+id/btnEditSpeech"
+    <TextView
+        android:id="@+id/tvEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnNewSpeech"
+        android:layout_below="@+id/tvNew"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/btneditspeech" />
+        android:layout_marginTop="50dp"
+        android:text="@string/btnEditSpeech"
+        android:textSize="35dp" />
 
-    <ImageView
-        android:id="@+id/btnPlaySpeech"
+    <TextView
+        android:id="@+id/tvPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnEditSpeech"
+        android:layout_below="@+id/tvEdit"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/btnplay" />
- 
+        android:layout_marginTop="50dp"
+        android:text="@string/btnPlaySpeech"
+        android:textSize="35dp" />
+
 </RelativeLayout>

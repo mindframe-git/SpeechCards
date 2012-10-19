@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,7 +16,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.Window;
-import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,6 +33,7 @@ public class ManageSpeechActivity extends Activity{
 	ImageView btnAddCard;
 	EditText etNewCardHeader;
 	ListView lvCardList;
+	TextView tvTitleSpeech;
 	
 	int id_speech;
 	String speechTitle;
@@ -50,6 +56,11 @@ public class ManageSpeechActivity extends Activity{
 		btnAddCard = (ImageView)findViewById(R.id.btnAddCard);
 		etNewCardHeader = (EditText)findViewById(R.id.etNewCardHeader);
 		lvCardList = (ListView)findViewById(R.id.lvCardList);
+		tvTitleSpeech = (TextView)findViewById(R.id.tvTitleSpeech);
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
+		tvTitleSpeech.setTypeface(font);
+		etNewCardHeader.setTypeface(font);
 		
 		Bundle bundle = getIntent().getExtras();
 		id_speech = bundle.getInt("id_speech");
@@ -85,6 +96,15 @@ public class ManageSpeechActivity extends Activity{
 			}
 		});
 				
+		lvCardList.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				crearDialogoConfirmacion(arg2);
+				return false;
+			}
+		});
+		
 //		lvCardList.setOnItemClickListener(new OnItemClickListener() {
 //
 //			@Override
@@ -112,6 +132,28 @@ public class ManageSpeechActivity extends Activity{
 //			}
 //		});
 		
+	}
+	
+	private Dialog crearDialogoConfirmacion(final int position) {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.dialTitle);
+		builder.setMessage(R.string.dialMessageCard);
+		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				bdh.delCard(cardList.get(position));
+				Toast.makeText(context, R.string.toastDelCard, Toast.LENGTH_SHORT).show();
+				loadCardList();
+				dialog.cancel();
+			}
+		});
+		builder.setNegativeButton(R.string.dialCancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		
+		return builder.show();
 	}
 
 	protected void addCard() {

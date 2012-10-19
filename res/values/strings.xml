@@ -1,6 +1,7 @@
 <resources>
 
-    <string name="app_name">SpeechCards</string>
+    <string name="app_name">Speech Cards</string>
+    <string name="app_head">Speech Cards</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Speech Cards</string>
@@ -8,9 +9,9 @@
     <!-- Buttons -->
     <string name="btnNext">Siguiente</string>
     <string name="btnPrev">Anterior</string>
-    <string name="btnNewSpeech">Nueva colección</string>
-    <string name="btnEditSpeech">Editar colección</string>
-    <string name="btnPlaySpeech">Reproducir Colección</string>
+    <string name="btnNewSpeech">Nueva coleccion</string>
+    <string name="btnEditSpeech">Editar</string>
+    <string name="btnPlaySpeech">Reproducir</string>
     <string name="btnPrevCard">Prev</string>
     <string name="btnNextCard">Sig</string>
     <string name="btnAddCard">Añadir</string>
@@ -19,7 +20,9 @@
     <string name="btnMod">Guardar</string>
     <string name="btnList">Lista de colecciones</string>
     <string name="btnBack">Volver</string>
+    <string name="btnCancel">Cancelar</string>
     <string name="btnPreview">Vista Previa</string>
+    <string name="btnAceptar">Aceptar</string>
 
     <!-- EditTexts -->
     <string name="etHeader">Cabecera:</string>
@@ -81,7 +84,8 @@
     
     <!-- Dialogs -->
     <string name="dialTitle">Confirmacion</string>
-    <string name="dialMessage">¿Desea borrar la colección actual? La acción no se podrá deshacer.</string>
+    <string name="dialMessageSpeech">¿Desea borrar la colección actual? La acción no se podrá deshacer.</string>
+    <string name="dialMessageCard">¿Desea borrar la tarjeta? La acción no se podrá deshacer.</string>
     <string name="dialAcept">Aceptar</string>
     <string name="dialCancel">Cancelar</string>
     
