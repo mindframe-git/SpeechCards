@@ -79,15 +79,12 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		db.execSQL(sb2.toString());
 	}
 
+	//Actualización version 2 db
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("ALTER TABLE SPEECH ADD SIZE TEXT");
 		db.execSQL("ALTER TABLE SPEECH ADD COLOR TEXT");
 		
-//		db.execSQL("DROP TABLE IF EXISTS card");
-//		db.execSQL("DROP TABLE IF EXISTS speech");
-//
-//		createTables(db);
 	}
 
 	public int newSpeech(String title, int size) {
@@ -310,7 +307,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Aquí recibiré una carta a la cual se le ha 
+	 * Aquí recibiré una tarjeta a la cual se le ha 
 	 * modificado la cabecera o el texto. UPDATE: 
 	 * @param card
 	 * @param Header 

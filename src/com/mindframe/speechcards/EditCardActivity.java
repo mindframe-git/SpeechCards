@@ -8,15 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EditCardActivity extends Activity{
 
-	TextView tvTitleSpeech;
+	TextView tvTitleSpeech,textView1, textView2, btnPreview;
 	EditText etHeader, etBody;
-	Button btnBack, btnPreview;
+	ImageView btnBack;
 	
 	Card currentCard = new Card();
 	int id_card;
@@ -36,14 +36,20 @@ public class EditCardActivity extends Activity{
 		context = this.getApplicationContext();
 		
 		tvTitleSpeech = (TextView)findViewById(R.id.tvTitleSpeech);
+		textView1 = (TextView)findViewById(R.id.textView1);
+		textView2 = (TextView)findViewById(R.id.textView2);
 		etHeader = (EditText)findViewById(R.id.etHeader);
 		etBody = (EditText)findViewById(R.id.etBody);
-		btnBack = (Button)findViewById(R.id.btnBack);
-		btnPreview = (Button)findViewById(R.id.btnPreview);
+		btnBack = (ImageView)findViewById(R.id.btnBack);
+		btnPreview = (TextView)findViewById(R.id.btnPreview);
+		
 		Typeface font = Typeface.createFromAsset(context.getAssets(), "FONT.TTF");
 		tvTitleSpeech.setTypeface(font);
 		etHeader.setTypeface(font);
 		etBody.setTypeface(font);
+		textView1.setTypeface(font);
+		textView2.setTypeface(font);
+		btnPreview.setTypeface(font);
 		
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
 		
@@ -73,10 +79,6 @@ public class EditCardActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				//Mandaremos a la vista previa donde podremos cambiar el tamaño de la letra.
-//				
-//				id_speech = bundle.getInt("id_speech");
-//				speechTitle = bundle.getString("speechTitle");
-//				mode = bundle.getString("mode");
 				
 				Bundle bun = new Bundle();
 				bun.putInt("id_speech", currentCard.id_speech);
@@ -92,6 +94,12 @@ public class EditCardActivity extends Activity{
 			}
 		});
 		
+	}
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		
+		bdh.updateCard(currentCard, etHeader.getText().toString(), etBody.getText().toString());
 	}
 	
 }

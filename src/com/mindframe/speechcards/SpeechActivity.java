@@ -5,28 +5,23 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
-public class SpeechActivity extends Activity{
+public class SpeechActivity extends Activity {
 
-	Button btnNext, btnPrev;
-	TextView tvTitulo, tvCuerpo, tvTamano;
+	TextView tvTitulo, tvCuerpo, tvTamano, btnNext, btnPrev;
 	BaseDatosHelper bdh;
 	SeekBar sbTamano;
 	Context context;
@@ -34,11 +29,10 @@ public class SpeechActivity extends Activity{
 	Card currentCard;
 
 	int id_speech, id_card, textSize;
-	String body;
+	String bundBody;
 	String speechTitle, action;
 
 	final String TAG = getClass().getName();
-
 
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -47,19 +41,24 @@ public class SpeechActivity extends Activity{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.card);
-		
-		
-		btnNext = (Button) findViewById(R.id.btnNext);
-		btnPrev = (Button) findViewById(R.id.btnPrev);
+
+		btnNext = (TextView) findViewById(R.id.btnNext);
+		btnPrev = (TextView) findViewById(R.id.btnPrev);
 		tvTitulo = (TextView) findViewById(R.id.tvTitulo);
 		tvCuerpo = (TextView) findViewById(R.id.tvCuerpo);
-		tvTamano = (TextView)findViewById(R.id.tvTamano);
-		sbTamano = (SeekBar)findViewById(R.id.sbTamano);
-		
+		tvTamano = (TextView) findViewById(R.id.tvTamano);
+		sbTamano = (SeekBar) findViewById(R.id.sbTamano);
+
 		// Habilitamos el scroll para el textView
 		tvCuerpo.setMovementMethod(new ScrollingMovementMethod());
 
-		
+		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
+		tvTitulo.setTypeface(font);
+		tvCuerpo.setTypeface(font);
+		tvTamano.setTypeface(font);
+		btnNext.setTypeface(font);
+		btnPrev.setTypeface(font);
+
 		cardList = new ArrayList<Card>();
 		context = this.getApplicationContext();
 
@@ -69,66 +68,69 @@ public class SpeechActivity extends Activity{
 		id_speech = bundle.getInt("id_speech");
 		speechTitle = bundle.getString("speechTitle");
 		id_card = bundle.getInt("id_card");
-		body = bundle.getString("body");
+		bundBody = bundle.getString("body");
 		action = bundle.getString("action");
-		
+
 		textSize = bdh.getSpeechById(id_speech).size;
 		sbTamano.setProgress(textSize);
 		tvCuerpo.setTextSize(textSize);
-		
-		if(action.compareToIgnoreCase("play") == 0){
+
+		if (action.compareToIgnoreCase("play") == 0) {
 			actionPlay();
-		}else if(action.compareToIgnoreCase("preview") == 0){
+		} else if (action.compareToIgnoreCase("preview") == 0) {
 			actionPreview();
 		}
-		
-		
 
 	}
 
 	private void actionPreview() {
-		btnPrev.setText(R.string.btnCancel);
+		btnPrev.setText(R.string.btnBack);
 		btnNext.setText(R.string.btnMod);
+
+		Card card = new Card();
+		card = bdh.getCardById(id_card);
+		card.setBody(bundBody);
 		
-		currentCard = bdh.getCardById(id_card);
-		currentCard.body = body;
-		writeCard(currentCard);
+		writeCard(card);
 		
-		
+//		
+//		tvTitulo.setText(currentCard.header);
+//		tvCuerpo.setText(bundBody);
+
 		sbTamano.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if(textSize == 0)
-					textSize=20;
-				
+				if (textSize == 0)
+					textSize = 20;
+
 				textSize = progress;
 				tvCuerpo.setTextSize(textSize);
 			}
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				
+
 			}
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				
+
 			}
-		
+
 		});
-		
+
 		btnPrev.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				finish();
-				
+
 			}
 		});
-		
+
 		btnNext.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 
@@ -136,21 +138,19 @@ public class SpeechActivity extends Activity{
 				speech = bdh.getSpeechById(id_speech);
 				speech.setSize(textSize);
 				bdh.updateSpeech(speech);
-				
+
 				Toast.makeText(context, R.string.toastUpdateSize, Toast.LENGTH_SHORT).show();
-				
+				finish();
 			}
 		});
-		
-		
-		
+
 	}
 
 	private void actionPlay() {
-		
+
 		sbTamano.setVisibility(View.GONE);
 		tvTamano.setVisibility(View.GONE);
-		
+
 		cardList = bdh.getCardsByIdSpeech(id_speech);
 
 		if (cardList.isEmpty()) {
@@ -192,10 +192,13 @@ public class SpeechActivity extends Activity{
 	private void writeCard(Card card) {
 		// Al cargar la tarjeta ponemos el scroll al principio.
 		tvCuerpo.scrollTo(0, 0);
-		
+
 		if (card != null) {
 			if (card.getHeader() != null)
 				tvTitulo.setText(card.getHeader());
+			else
+				tvTitulo.setText("");
+
 			if (card.getBody() != null) {
 				String body = card.getBody();
 
@@ -205,6 +208,8 @@ public class SpeechActivity extends Activity{
 					tvCuerpo.setText(body);
 				}
 
+			} else {
+				tvCuerpo.setText("");
 			}
 		}
 	}
@@ -281,34 +286,6 @@ public class SpeechActivity extends Activity{
 					break;
 				}
 			}
-		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		MenuInflater inflater = getMenuInflater();
-
-		inflater.inflate(R.menu.speech_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.mnEditSpeech:
-			// redirigimos a la página de edición de este menú
-			Bundle bun = new Bundle();
-			bun.putInt("id_card", currentCard.id_card);
-			bun.putString("speechTitle", speechTitle);
-			Intent intent = new Intent(SpeechActivity.this, EditCardActivity.class);
-			intent.putExtras(bun);
-			startActivity(intent);
-			return true;
-
-		default:
-			return super.onOptionsItemSelected(item);
-
 		}
 	}
 
