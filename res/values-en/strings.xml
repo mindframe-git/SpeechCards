@@ -1,0 +1,101 @@
+<resources>
+
+    <string name="app_name">Speech Cards</string>
+    <string name="app_head">Speech Cards</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Speech Cards</string>
+    <string name="card">card</string>
+
+    <!-- Buttons -->
+    
+ 	<string name="btnNext">Next</string>
+    <string name="btnPrev">Prev</string>
+    <string name="btnNewSpeech">New collection</string>
+    <string name="btnEditSpeech">Edit</string>
+    <string name="btnPlaySpeech">Play</string>
+    <string name="btnPrevCard">Prev</string>
+    <string name="btnNextCard">Next</string>
+    <string name="btnAddCard">Add</string>
+    <string name="btnDeleteCard">Delete</string>
+    <string name="btnEnd">End</string>
+    <string name="btnMod">Save</string>
+    <string name="btnList">Collection list</string>
+    <string name="btnBack">Back</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="btnPreview">Preview</string>
+    <string name="btnAceptar">Accept</string>
+
+    <!-- EditTexts -->
+    <string name="etHeader">Header:</string>
+    <string name="etBody">Body:</string>
+    <string name="AddCards">Add Cards</string>
+
+    <!-- TextViews -->
+    <string name="tvTitle">Collection Title:</string>
+    <string name="tvNewCollecion">New Collection</string>
+    <string name="tvTextSize">Text size:</string>
+    
+    
+    
+    <string name="tvHelp">
+        <![CDATA[
+       	<b><u>Edición</u></b>
+       	<br><br>
+       	-Para agregar la primera tarjeta, simplemente escribir la cabecera y el cuerpo y pulsar en guardar.
+       	<br><br>
+       	-Para añadir una tarjeta, pulsar en menu, "Añadir tarjeta", rellenar los campos y pulsar en guardar.
+       	<br><br>
+       	-Puedes borrar la tarjeta actual pulsando en la opción "Borrar" del menú.
+       	<br><br>
+       	-Cuando pulses "Añadir tarjeta" se añadirá después de la tarjeta actual.
+       	<br><br>
+       	-El botón "Borrar Colección" borrará completamente la colección actual y todas sus tarjetas.
+       	<br><br><br>
+        <b><u>Formatear textos</u></b>
+        <br>
+        Cuando edites una tarjeta, puedes formatear el texto de la siguiente manera:
+        <br><br>
+        <i>-Negritas</i>
+        <br>Para resaltar algo en <b>negrita</b> pon el texto que quieras resaltar #entre almohadillas#
+        <br><br>
+        <i>-Subrayado</i>
+        <br>Para <u>subrayar,</u> pon el texto que quieras _entre guiones bajos_
+        <br><br>
+        <i>-Cursivas</i>
+        <br>Si quieres poner el texto <i>en cursivas</i>, usa los %símbolos de porcentaje%]]></string>
+
+    <!-- Menus -->
+    <string name="mnDelSpeech">Delete Collection</string>
+    <string name="mnDelCard">Delete Card</string>
+    <string name="mnAddCard">Add Card</string>
+    <string name="mnHelp">Help</string>
+    <string name="mnEditSpeech">Edit</string>
+
+    <!-- Toasts -->
+    <string name="toastVoidBody">You must enter something in the body.</string>
+    <string name="toastVoidHeader">You must enter something in the header.</string>
+    <string name="toastAddCard">Card added.</string>
+    <string name="toastDelCard">Card deleted.</string>
+    <string name="toastFisrtCard">Se encuentra en la primera tarjeta.</string>
+    <string name="toastNoCards">No Cards.</string>
+    <string name="toastNoMoreCards">No more cards.</string>
+    <string name="toastFail">Error.</string>
+    <string name="toastUpdateCard">Card updated.</string>
+    <string name="toastVoidName">You must enter a name.</string>
+    <string name="toastDelSpeech">Collection deleted.</string>
+    <string name="toastExistsSpeech">There is already a collection with that name.</string>
+    <string name="toastNoSpeech">No collections.</string>
+    <string name="toastSaveCard">Card saved.</string>
+    <string name="toastUpdateSize">Text size saved.</string>
+    
+    <!-- Dialogs -->
+    <string name="dialTitle">Confirmacion</string>
+    <string name="dialMessageSpeech">Do you want to delete the current collecion?</string>
+    <string name="dialMessageCard">Do you want to delete the card?</string>
+    <string name="dialAcept">Accept</string>
+    <string name="dialCancel">Cancel</string>
+    
+    
+
+</resources>

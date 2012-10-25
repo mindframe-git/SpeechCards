@@ -41,11 +41,11 @@ public class ListAdapter extends ArrayAdapter {
 		tvTitle.setText(speech.title);
 		List<Card> cardList = bdh.getCardsByIdSpeech(speech.id_speech);
 		if(cardList.isEmpty()){
-			tvNCard.setText("No hay tarjetas.");
+			tvNCard.setText(R.string.toastNoCards);
 		}else if(cardList.size() == 1){
-			tvNCard.setText("1 tarjeta.");
+			tvNCard.setText("1 " + context.getString(R.string.card) + ".");
 		}else{
-			tvNCard.setText(cardList.size() + " tarjetas.");
+			tvNCard.setText(cardList.size() + context.getString(R.string.card) +"s.");
 		}
 		
 		return convertView;

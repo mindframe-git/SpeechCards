@@ -64,7 +64,7 @@ public class NewSpeechActivity extends Activity {
 		etNewSpeech.setTypeface(font);
 		
 		
-		tvTitle.setText("Nueva Colección");
+		tvTitle.setText(R.string.tvNewCollecion);
 		
 		
 		// Al pulsar enter, se crea la colección
