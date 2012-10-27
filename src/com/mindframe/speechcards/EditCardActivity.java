@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mindframe.speechcards.BaseDatosHelper;
+import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.model.Card;
+
 public class EditCardActivity extends Activity{
 
 	TextView tvTitleSpeech,textView1, textView2, btnPreview;
@@ -51,7 +55,7 @@ public class EditCardActivity extends Activity{
 		textView2.setTypeface(font);
 		btnPreview.setTypeface(font);
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 		
 		Bundle bundle = getIntent().getExtras();
 		id_card = bundle.getInt("id_card");
@@ -61,8 +65,8 @@ public class EditCardActivity extends Activity{
 		
 		currentCard = bdh.getCardById(id_card);
 		
-		etHeader.setText(currentCard.header);
-		etBody.setText(currentCard.body);
+		etHeader.setText(currentCard.getHeader());
+		etBody.setText(currentCard.getBody());
 		
 		btnBack.setOnClickListener(new OnClickListener() {
 			
@@ -81,7 +85,7 @@ public class EditCardActivity extends Activity{
 				//Mandaremos a la vista previa donde podremos cambiar el tamaño de la letra.
 				
 				Bundle bun = new Bundle();
-				bun.putInt("id_speech", currentCard.id_speech);
+				bun.putInt("id_speech", currentCard.getId_speech());
 				bun.putString("speechTitle", speechTitle);
 				bun.putInt("id_card", id_card);
 				bun.putString("action", "preview");

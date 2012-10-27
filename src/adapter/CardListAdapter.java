@@ -1,4 +1,4 @@
-package com.mindframe.speechcards;
+package adapter;
 
 import java.util.List;
 
@@ -14,6 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mindframe.speechcards.BaseDatosHelper;
+import com.mindframe.speechcards.EditCardActivity;
+import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.model.Card;
+
 @SuppressWarnings("rawtypes")
 public class CardListAdapter extends ArrayAdapter{
 	
@@ -25,7 +30,7 @@ public class CardListAdapter extends ArrayAdapter{
 
 	
 	@SuppressWarnings("unchecked")
-	CardListAdapter(Context _context, int resourceID, List<Card> _cardList){
+	public CardListAdapter(Context _context, int resourceID, List<Card> _cardList){
 		super(_context, resourceID, _cardList);
 		this.context = _context;
 		this.cardList = _cardList;
@@ -35,12 +40,12 @@ public class CardListAdapter extends ArrayAdapter{
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 		convertView = inflater.inflate(R.layout.cardline, null);
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 		
 		final TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		final ImageView btnEdit = (ImageView)convertView.findViewById(R.id.btnEdit);
 //		final ImageView btnRemove = (ImageView)convertView.findViewById(R.id.btnRemove);
-		tvTitle.setText(cardList.get(position).header);
+		tvTitle.setText(cardList.get(position).getHeader());
 		
 		Typeface font = Typeface.createFromAsset(context.getAssets(), "FONT.TTF");
 		tvTitle.setTypeface(font);
@@ -54,7 +59,7 @@ public class CardListAdapter extends ArrayAdapter{
 				Bundle bun = new Bundle();
 				bun.putInt("id_card", cardList.get(position).getId_card());
 				
-				bun.putString("speechTitle", bdh.getSpeechById(cardList.get(position).id_speech).title);
+				bun.putString("speechTitle", bdh.getSpeechById(cardList.get(position).getId_speech()).getTitle());
 				intent.putExtras(bun);
 				context.startActivity(intent);
 			}

@@ -1,4 +1,4 @@
-package com.mindframe.speechcards;
+package com.mindframe.speechcards.model;
 
 public class Card {
 

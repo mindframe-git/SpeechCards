@@ -10,8 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/app_head"
-        android:textSize="42dp"
-        android:typeface="monospace" />
+        android:textSize="42dp" />
 
     <ImageView
         android:id="@+id/imageView1"

@@ -1,4 +1,4 @@
-package com.mindframe.speechcards;
+package com.mindframe.speechcards.model;
 
 public class Speech {
 
@@ -6,13 +6,15 @@ public class Speech {
 	String title;
 	int size;
 	String color;
+	int id_category;
 
-	public Speech(int id_speech, String title, int size, String color) {
+	public Speech(int id_speech, String title, int size, String color, int id_category) {
 		super();
 		this.id_speech = id_speech;
 		this.title = title;
 		this.size = size;
 		this.color = color;
+		this.id_category = id_category;
 	}
 	
 	public Speech() {
@@ -51,4 +53,12 @@ public class Speech {
 		this.color = color;
 	}
 
+	public int getId_category() {
+		return id_category;
+	}
+
+	public void setId_category(int id_category) {
+		this.id_category = id_category;
+	}
+	
 }

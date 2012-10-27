@@ -1,4 +1,4 @@
-package com.mindframe.speechcards;
+package adapter;
 
 import java.util.List;
 
@@ -10,13 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.mindframe.speechcards.BaseDatosHelper;
+import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.model.Card;
+import com.mindframe.speechcards.model.Speech;
+
 public class ListAdapter extends ArrayAdapter {
 
 	Context context;
 	List<Speech> speechList;
 	BaseDatosHelper bdh;
 	
-	ListAdapter(Context _context, int resourceId, List<Speech> _speechList) {
+	public ListAdapter(Context _context, int resourceId, List<Speech> _speechList) {
 		super(_context, resourceId, _speechList);
 		this.speechList = _speechList;
 		this.context = _context;
@@ -29,7 +34,9 @@ public class ListAdapter extends ArrayAdapter {
 		
 		TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		TextView tvNCard = (TextView)convertView.findViewById(R.id.tvNCard);
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		TextView tvCategory = (TextView)convertView.findViewById(R.id.tvCategory);
+		
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 		
 		Speech speech = speechList.get(position);
 		
@@ -37,9 +44,17 @@ public class ListAdapter extends ArrayAdapter {
 		
 		tvTitle.setTypeface(font);
 		tvNCard.setTypeface(font);
+		tvCategory.setTypeface(font);
 		
-		tvTitle.setText(speech.title);
-		List<Card> cardList = bdh.getCardsByIdSpeech(speech.id_speech);
+		tvTitle.setText(speech.getTitle());
+		String cat = bdh.getCategoryById(speech.getId_category()).getName();
+		if(cat == null || cat.trim().compareToIgnoreCase("") == 0)	{
+			tvCategory.setText(R.string.tvNoCategory);
+		}else{
+			tvCategory.setText(cat);
+		}
+		
+		List<Card> cardList = bdh.getCardsByIdSpeech(speech.getId_speech());
 		if(cardList.isEmpty()){
 			tvNCard.setText(R.string.toastNoCards);
 		}else if(cardList.size() == 1){

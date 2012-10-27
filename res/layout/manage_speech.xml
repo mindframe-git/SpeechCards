@@ -11,8 +11,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/AddCards"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp"
-        android:typeface="monospace" />
+        android:textSize="30dp" />
 
     <ImageView
         android:id="@+id/imageView1"

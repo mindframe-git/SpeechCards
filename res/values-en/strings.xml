@@ -25,6 +25,7 @@
     <string name="btnCancel">Cancel</string>
     <string name="btnPreview">Preview</string>
     <string name="btnAceptar">Accept</string>
+    <string name="btnAddCat">Add category</string>
 
     <!-- EditTexts -->
     <string name="etHeader">Header:</string>
@@ -35,6 +36,11 @@
     <string name="tvTitle">Collection Title:</string>
     <string name="tvNewCollecion">New Collection</string>
     <string name="tvTextSize">Text size:</string>
+    <string name="tvTitleListEdit">Edit</string>
+    <string name="tvTitleListPlay">Play</string>
+    <string name="tvCategory">Category</string>
+    <string name="tvNoCategory">No category</string>
+    
     
     
     
@@ -90,11 +96,13 @@
     <string name="toastUpdateSize">Text size saved.</string>
     
     <!-- Dialogs -->
-    <string name="dialTitle">Confirmacion</string>
+    <string name="dialTitle">Confirm</string>
     <string name="dialMessageSpeech">Do you want to delete the current collecion?</string>
     <string name="dialMessageCard">Do you want to delete the card?</string>
     <string name="dialAcept">Accept</string>
     <string name="dialCancel">Cancel</string>
+    
+    <string name="dialTitleNewCat">New category</string>
     
     
 

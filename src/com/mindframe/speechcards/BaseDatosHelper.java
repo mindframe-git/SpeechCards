@@ -8,8 +8,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.util.Log;
+
+import com.mindframe.speechcards.model.Card;
+import com.mindframe.speechcards.model.Category;
+import com.mindframe.speechcards.model.Speech;
 /**
  * 
  * Crea la base de datos y realiza 
@@ -21,17 +27,26 @@ import android.provider.BaseColumns;
  */
 public class BaseDatosHelper extends SQLiteOpenHelper {
 
-	String SQL_CREATE_SPEECH = "create table speech (id_speech integer, title text)";
-	String SQL_CREATE_CARD = "create table card (id_card integer, id_speech integer, id_prev_card integer, id_next_card intenger, header text, body text)";
+//	String SQL_CREATE_SPEECH = "create table speech (id_speech integer, title text)";
+//	String SQL_CREATE_CARD = "create table card (id_card integer, id_speech integer, id_prev_card integer, id_next_card intenger, header text, body text)";
 
 	public static final String TABLE_NAME_SPEECH = "SPEECH";
 	public static final String TABLE_NAME_CARD = "CARD";
+	public static final String TABLE_NAME_CATEGORY = "CATEGORY";
+	
+	final String TAG = getClass().getName();
 
 	public static class speechColums implements BaseColumns {
 		public static final String TITLE = "TITLE";
 		public static final String SIZE = "SIZE";
 		public static final String COLOR = "COLOR";
+		public static final String ID_CATEGORY = "ID_CATEGORY";
 		
+	}
+	
+	public static class categoryColumns implements BaseColumns{
+		public static final String NAME = "name";
+		public static final String COLOR = "color";
 	}
 
 	public static class cardColumns implements BaseColumns {
@@ -55,46 +70,88 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	
 	public void createTables(SQLiteDatabase db){
 		
-		StringBuilder sb1 = new StringBuilder();
-		StringBuilder sb2 = new StringBuilder();
+		StringBuilder createTableSpeech = new StringBuilder();
+		StringBuilder createTableCard = new StringBuilder();
+		StringBuilder createTableCategory = new StringBuilder();
 
-		sb1.append("CREATE TABLE " + TABLE_NAME_SPEECH + " (");
-		sb1.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
-		sb1.append(speechColums.TITLE + " TEXT NOT NULL, ");
-		sb1.append(speechColums.SIZE + " INTEGER, ");
-		sb1.append(speechColums.COLOR + " TEXT");
-		sb1.append(");");
+		createTableSpeech.append("CREATE TABLE " + TABLE_NAME_SPEECH + " (");
+		createTableSpeech.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		createTableSpeech.append(speechColums.TITLE + " TEXT NOT NULL, ");
+		createTableSpeech.append(speechColums.SIZE + " INTEGER, ");
+		createTableSpeech.append(speechColums.COLOR + " TEXT, ");
+		createTableSpeech.append(speechColums.ID_CATEGORY + " INTEGER");
+		createTableSpeech.append(");");
 
-		sb2.append("CREATE TABLE " + TABLE_NAME_CARD + " (");
-		sb2.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
-		sb2.append(cardColumns.ID_SPEECH + " INTEGER NOT NULL, ");
-		sb2.append(cardColumns.ID_PREV_CARD + " INTEGER, ");
-		sb2.append(cardColumns.ID_NEXT_CARD + " INTEGER, ");
-		sb2.append(cardColumns.HEADER + " TEXT, ");
-		sb2.append(cardColumns.BODY + " TEXT, ");
-		sb2.append("FOREIGN KEY (" + cardColumns.ID_SPEECH + ") REFERENCES " + TABLE_NAME_SPEECH+"("+BaseColumns._ID+") ");
-		sb2.append(");");
+		createTableCard.append("CREATE TABLE " + TABLE_NAME_CARD + " (");
+		createTableCard.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		createTableCard.append(cardColumns.ID_SPEECH + " INTEGER NOT NULL, ");
+		createTableCard.append(cardColumns.ID_PREV_CARD + " INTEGER, ");
+		createTableCard.append(cardColumns.ID_NEXT_CARD + " INTEGER, ");
+		createTableCard.append(cardColumns.HEADER + " TEXT, ");
+		createTableCard.append(cardColumns.BODY + " TEXT, ");
+		createTableCard.append("FOREIGN KEY (" + cardColumns.ID_SPEECH + ") REFERENCES " + TABLE_NAME_SPEECH+"("+BaseColumns._ID+") ");
+		createTableCard.append(");");
+		
+		createTableCategory.append("CREATE TABLE " + TABLE_NAME_CATEGORY + " (");
+		createTableCategory.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		createTableCategory.append(categoryColumns.NAME + " TEXT, ");
+		createTableCategory.append(categoryColumns.COLOR + " TEXT");
+		createTableCategory.append(");");
 
-		db.execSQL(sb1.toString());
-		db.execSQL(sb2.toString());
+		db.execSQL(createTableSpeech.toString());
+		db.execSQL(createTableCard.toString());
+		db.execSQL(createTableCategory.toString());
 	}
 
 	//Actualización version 2 db
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("ALTER TABLE SPEECH ADD SIZE TEXT");
-		db.execSQL("ALTER TABLE SPEECH ADD COLOR TEXT");
+		Log.d(TAG, "upgradeDB. Old: " + oldVersion + ", new: " + newVersion);
+		
+		try{
+			db.execSQL("ALTER TABLE SPEECH ADD SIZE TEXT");
+		}catch (SQLiteException e) {
+			//ya está hecho
+		}
+		try{
+			db.execSQL("ALTER TABLE SPEECH ADD COLOR TEXT");
+		}catch (SQLiteException e) {
+			// TODO: handle exception
+		}
+		try{
+			db.execSQL("ALTER TABLE SPEECH ADD ID_CATEGORY INTEGER");
+		}catch (SQLiteException e) {
+			// TODO: handle exception
+		}
+		
+		
+		StringBuilder createTableCategory = new StringBuilder();
+		
+		createTableCategory.append("CREATE TABLE " + TABLE_NAME_CATEGORY + " (");
+		createTableCategory.append(BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		createTableCategory.append(categoryColumns.NAME + " TEXT, ");
+		createTableCategory.append(categoryColumns.COLOR + " TEXT");
+		createTableCategory.append(");");
+		
+		try{
+			db.execSQL(createTableCategory.toString());
+		}catch (SQLiteException e) {
+			// TODO: handle exception
+		}
+		
+		
 		
 	}
 
-	public int newSpeech(String title, int size) {
+	public int newSpeech(Speech speech) {
 		
 		int id_speech;
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues cv = new ContentValues();
-		cv.put(speechColums.TITLE, title.trim());
-		cv.put(speechColums.SIZE, size);
+		cv.put(speechColums.TITLE, speech.getTitle().trim());
+		cv.put(speechColums.SIZE, speech.getSize());
+		cv.put(speechColums.ID_CATEGORY, speech.getId_category());
 		
 		id_speech = (int) db.insert(TABLE_NAME_SPEECH, null, cv);
 		db.close();
@@ -124,7 +181,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		
 		List<Speech> speechList = new ArrayList<Speech>();
 		
-		String[] columns = {speechColums._ID, speechColums.TITLE};
+		String[] columns = {speechColums._ID, speechColums.TITLE, speechColums.SIZE, speechColums.COLOR, speechColums.ID_CATEGORY};
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -133,8 +190,11 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		if(c.moveToFirst()){
 			do{
 				Speech speech = new Speech();
-				speech.id_speech = c.getInt(0);
-				speech.title = c.getString(1);
+				speech.setId_speech(c.getInt(0));
+				speech.setTitle(c.getString(1));
+				speech.setSize(c.getInt(2));
+				speech.setColor(c.getString(3));
+				speech.setId_category(c.getInt(4));
 				
 				speechList.add(speech);
 				
@@ -161,21 +221,21 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		
 		ContentValues values = new ContentValues();
 		
-		values.put(cardColumns.BODY, card.body);
-		values.put(cardColumns.HEADER, card.header);
-		values.put(cardColumns.ID_SPEECH, card.id_speech);
-		values.put(cardColumns.ID_PREV_CARD, card.id_prev_card);
-		values.put(cardColumns.ID_NEXT_CARD, card.id_next_card);
+		values.put(cardColumns.BODY, card.getBody());
+		values.put(cardColumns.HEADER, card.getHeader());
+		values.put(cardColumns.ID_SPEECH, card.getId_speech());
+		values.put(cardColumns.ID_PREV_CARD, card.getId_prev_card());
+		values.put(cardColumns.ID_NEXT_CARD, card.getId_next_card());
 		
 		
 		idNewCard = (int) db.insert(TABLE_NAME_CARD, null, values);
 		
 		if(actCard){
-			updatePrev(card.id_speech, card.id_prev_card, idNewCard);
+			updatePrev(card.getId_speech(), card.getId_prev_card(), idNewCard);
 		}
 		//Es una tarjeta de enmedio, tenemos que actualizar el id_prev de la siguiente.
-		if(card.id_next_card != 0){
-			updateNext(card.id_speech, card.id_next_card, idNewCard);
+		if(card.getId_next_card() != 0){
+			updateNext(card.getId_speech(), card.getId_next_card(), idNewCard);
 		}
 			
 		db.close();
@@ -245,12 +305,12 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 			do{
 				Card card = new Card();
 				
-				card.id_card = c.getInt(0);
-				card.id_speech = c.getInt(1);
-				card.id_prev_card = c.getInt(2);
-				card.id_next_card = c.getInt(3);
-				card.header = c.getString(4);
-				card.body = c.getString(5);
+				card.setId_card(c.getInt(0));
+				card.setId_speech(c.getInt(1));
+				card.setId_prev_card(c.getInt(2));
+				card.setId_next_card(c.getInt(3));
+				card.setHeader(c.getString(4));
+				card.setBody(c.getString(5));
 				
 				cardList.add(card);
 			}while(c.moveToNext());
@@ -264,19 +324,18 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	public Speech getSpeechById(int id_speech){
 		Speech speech = new Speech();
 		
-		String[] columns = {speechColums.TITLE, speechColums.SIZE, speechColums.COLOR, speechColums._ID};
+		String[] columns = {speechColums.TITLE, speechColums.SIZE, speechColums.COLOR, speechColums._ID, speechColums.ID_CATEGORY};
 		String[] args = {String.valueOf(id_speech)};
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor c = db.query(TABLE_NAME_SPEECH, columns, "_id=?", args, null, null, null, null);
 		if(c.moveToFirst()){
-			speech.title=c.getString(0);
-			speech.size = c.getInt(1);
-			speech.color = c.getString(2);
-			speech.id_speech = c.getInt(3);
-			
-		}while(c.moveToNext());
-
+			speech.setTitle(c.getString(0));
+			speech.setSize(c.getInt(1));
+			speech.setColor(c.getString(2));
+			speech.setId_speech(c.getInt(3));
+			speech.setId_category(c.getInt(4));
+		}
 		
 		db.close();
 		return speech;
@@ -292,14 +351,14 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		Cursor c = db.query(TABLE_NAME_CARD, columns, "_id=?", args, null, null, null, null);
 		
 		if(c.moveToFirst()){
-			card.id_card =c.getInt(0);
-			card.id_speech =c.getInt(1);
-			card.body =c.getString(2);
-			card.header =c.getString(3);
-			card.id_next_card =c.getInt(4);
-			card.id_prev_card =c.getInt(5);
+			card.setId_card(c.getInt(0));
+			card.setId_speech(c.getInt(1));
+			card.setBody(c.getString(2));
+			card.setHeader(c.getString(3));
+			card.setId_next_card(c.getInt(4));
+			card.setId_prev_card(c.getInt(5));
 			
-		}while(c.moveToNext());
+		}
 		
 		db.close();
 	
@@ -318,7 +377,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		ContentValues val = new ContentValues();
 		val.put(cardColumns.HEADER, header);
 		val.put(cardColumns.BODY, body);
-		String whereClause =cardColumns._ID + " = " + card.id_card;
+		String whereClause =cardColumns._ID + " = " + card.getId_card();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -334,10 +393,12 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	
 	public void updateSpeech(Speech speech){
 		ContentValues val = new ContentValues();
-		val.put(speechColums.TITLE, speech.title);
-		val.put(speechColums.SIZE, speech.size);
-		val.put(speechColums.COLOR, speech.color);
-		String whereClause = speechColums._ID + " =" + speech.id_speech;
+		val.put(speechColums.TITLE, speech.getTitle());
+		val.put(speechColums.SIZE, speech.getSize());
+		val.put(speechColums.COLOR, speech.getColor());
+		val.put(speechColums.ID_CATEGORY, speech.getId_category());
+		
+		String whereClause = speechColums._ID + " =" + speech.getId_speech();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -365,29 +426,29 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		if(card.isFirst()){
 			ContentValues cv = new ContentValues();
 			cv.put(cardColumns.ID_PREV_CARD, 0);
-			String whereClause = cardColumns._ID + " = " + card.id_next_card;
+			String whereClause = cardColumns._ID + " = " + card.getId_next_card();
 			db.update(TABLE_NAME_CARD, cv, whereClause, null);
 		}if(card.isLast()){
 			ContentValues cv = new ContentValues();
 			cv.put(cardColumns.ID_NEXT_CARD, 0);
-			String whereClause = cardColumns._ID + " = " + card.id_prev_card;
+			String whereClause = cardColumns._ID + " = " + card.getId_prev_card();
 			db.update(TABLE_NAME_CARD, cv, whereClause, null);
 		}if(!card.isFirst() && !card.isLast()){
 			//Cambiamos la tarjeta previa
 			ContentValues cv_prev = new ContentValues();
-			cv_prev.put(cardColumns.ID_NEXT_CARD, card.id_next_card);
-			String whereClause_prev = cardColumns._ID + " = " + card.id_prev_card;
+			cv_prev.put(cardColumns.ID_NEXT_CARD, card.getId_next_card());
+			String whereClause_prev = cardColumns._ID + " = " + card.getId_prev_card();
 			db.update(TABLE_NAME_CARD, cv_prev, whereClause_prev, null);
 			
 			//cambiamos la tarjeta siguiente
 			ContentValues cv_next = new ContentValues();
-			cv_next.put(cardColumns.ID_PREV_CARD, card.id_prev_card);
-			String whereClause_next = cardColumns._ID + " = " + card.id_next_card;
+			cv_next.put(cardColumns.ID_PREV_CARD, card.getId_prev_card());
+			String whereClause_next = cardColumns._ID + " = " + card.getId_next_card();
 			db.update(TABLE_NAME_CARD, cv_next, whereClause_next, null);
 		}
 		
 		//Borramos la tarjeta.
-		int result = db.delete(TABLE_NAME_CARD, cardColumns._ID + " = " + card.id_card, null);
+		int result = db.delete(TABLE_NAME_CARD, cardColumns._ID + " = " + card.getId_card(), null);
 		
 		db.close();
 		
@@ -412,7 +473,74 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		
 		db.close();
 	}
+
+	public List<Category> getCatList() {
+		List<Category> catList = new ArrayList<Category>();
+		
+		String[] columns = {categoryColumns._ID, categoryColumns.NAME, categoryColumns.COLOR};
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		Cursor c = db.query(TABLE_NAME_CATEGORY, columns, null, null, null, null, null);
+		
+		if(c.moveToFirst()){
+			do{
+				Category cat = new Category();
+				 cat.setId(c.getInt(0));
+				 cat.setName(c.getString(1));
+				 cat.setColor(c.getString(2));
+				 
+				 catList.add(cat);
+			}while(c.moveToNext());
+		}
+		
+		db.close();
+		
+		return catList;
+	}
 	
+	public void newCategory(Category cat){
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put(categoryColumns.NAME, cat.getName());
+		cv.put(categoryColumns.COLOR, cat.getColor());
+		db.insert(TABLE_NAME_CATEGORY, null, cv);
+		
+		db.close();
+		
+	}
 	
+	public boolean existsCategory(String catName){
+		boolean exists = false;
+		
+		String sql = "SELECT * FROM " + TABLE_NAME_CATEGORY + " WHERE " + categoryColumns.NAME + " = '" + catName.trim() + "' COLLATE NOCASE";
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		Cursor c = db.rawQuery(sql, null);
+		
+		if(c.getCount() > 0){
+			exists = true;
+		}
+		db.close();
+		
+		return exists;
+	}
+	
+	public Category getCategoryById(int id){
+		Category cat = new Category();
+		
+		String[] columns = {categoryColumns._ID, categoryColumns.NAME, categoryColumns.COLOR};
+		SQLiteDatabase db = this.getReadableDatabase();
+		String[] args = {String.valueOf(id)};
+		Cursor c = db.query(TABLE_NAME_CATEGORY, columns, "_id=?", args, null, null, null);
+		
+		if(c.moveToFirst()){
+			cat.setId(c.getInt(0));
+			cat.setName(c.getString(1));
+			cat.setColor(c.getString(2));
+		}
+		
+		return cat;
+	}
 	
 }

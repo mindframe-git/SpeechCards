@@ -1,5 +1,6 @@
 package com.mindframe.speechcards;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,9 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
+
+import com.mindframe.speechcards.model.Card;
+import com.mindframe.speechcards.model.Speech;
 
 public class SpeechActivity extends Activity {
 
@@ -62,7 +66,7 @@ public class SpeechActivity extends Activity {
 		cardList = new ArrayList<Card>();
 		context = this.getApplicationContext();
 
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 
 		Bundle bundle = getIntent().getExtras();
 		id_speech = bundle.getInt("id_speech");
@@ -71,7 +75,7 @@ public class SpeechActivity extends Activity {
 		bundBody = bundle.getString("body");
 		action = bundle.getString("action");
 
-		textSize = bdh.getSpeechById(id_speech).size;
+		textSize = bdh.getSpeechById(id_speech).getSize();
 		sbTamano.setProgress(textSize);
 		tvCuerpo.setTextSize(textSize);
 
@@ -183,7 +187,7 @@ public class SpeechActivity extends Activity {
 
 	private Card getFirstCard() {
 		for (Card card : cardList) {
-			if (card.id_prev_card == 0)
+			if (card.getId_prev_card() == 0)
 				return card;
 		}
 		return null;
@@ -280,7 +284,7 @@ public class SpeechActivity extends Activity {
 			Toast.makeText(context, R.string.toastFisrtCard, Toast.LENGTH_SHORT).show();
 		} else {
 			for (Card card : cardList) {
-				if (card.id_card == currentCard.getId_prev_card()) {
+				if (card.getId_card() == currentCard.getId_prev_card()) {
 					currentCard = card;
 					writeCard(card);
 					break;

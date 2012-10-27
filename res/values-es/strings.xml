@@ -24,6 +24,8 @@
     <string name="btnCancel">Cancelar</string>
     <string name="btnPreview">Vista Previa</string>
     <string name="btnAceptar">Aceptar</string>
+    <string name="btnAddCat">Añadir categoría</string>
+    
 
 <!--     EditTexts -->
     <string name="etHeader">Cabecera:</string>
@@ -34,7 +36,10 @@
     <string name="tvTitle">Título de la colección:</string>
     <string name="tvNewCollecion">Nueva coleeción</string>
 	<string name="tvTextSize">Tamaño del texto:</string>
-	
+	<string name="tvTitleListEdit">Editar</string>
+    <string name="tvTitleListPlay">Reproducir</string>
+    <string name="tvCategory">Categoría</string>
+	<string name="tvNoCategory">Sin categoría</string>
 <!--     Menus -->
     <string name="mnDelSpeech">Borrar colección</string>
     <string name="mnDelCard">Borrar tarjeta</string>
@@ -65,6 +70,8 @@
     <string name="dialMessageCard">¿Desea borrar la tarjeta? La acción no se podrá deshacer.</string>
     <string name="dialAcept">Aceptar</string>
     <string name="dialCancel">Cancelar</string>
+    
+    <string name="dialTitleNewCat">Nueva categoría</string>
     
 
 </resources>

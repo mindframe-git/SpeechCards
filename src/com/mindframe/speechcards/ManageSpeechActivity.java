@@ -1,8 +1,10 @@
 package com.mindframe.speechcards;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.CardListAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mindframe.speechcards.model.Card;
 
 public class ManageSpeechActivity extends Activity{
 	
@@ -51,7 +55,7 @@ public class ManageSpeechActivity extends Activity{
 		context = this.getApplicationContext();
 		setContentView(R.layout.manage_speech);
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 		
 		btnAddCard = (ImageView)findViewById(R.id.btnAddCard);
 		etNewCardHeader = (EditText)findViewById(R.id.etNewCardHeader);
@@ -163,15 +167,15 @@ public class ManageSpeechActivity extends Activity{
 			Toast.makeText(context, R.string.toastVoidHeader, Toast.LENGTH_SHORT).show();
 		}else{
 				Card card = new Card();
-				card.header = etNewCardHeader.getText().toString().trim();
-				card.id_next_card = 0;
-				card.id_speech = id_speech;
+				card.setHeader(etNewCardHeader.getText().toString().trim());
+				card.setId_next_card(0);
+				card.setId_speech(id_speech);
 				if(cardList.size() == 0){
-					card.id_prev_card = 0;
-					card.id_card = bdh.addCard(card, false);
+					card.setId_prev_card(0);
+					card.setId_card(bdh.addCard(card, false));
 				}else{
-					card.id_prev_card = lastCard.id_card;
-					card.id_card = bdh.addCard(card, true);
+					card.setId_prev_card(lastCard.getId_card());
+					card.setId_card(bdh.addCard(card, true));
 				}
 				
 				

@@ -1,5 +1,6 @@
 package com.mindframe.speechcards;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.model.Speech;
 
 public class MainActivity extends Activity {
 
@@ -49,7 +53,7 @@ public class MainActivity extends Activity {
 		tvEdit.setTypeface(font);
 		tvPlay.setTypeface(font);
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 
 		
 		tvPlay.setOnClickListener(new OnClickListener() {

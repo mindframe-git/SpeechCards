@@ -47,8 +47,7 @@
         android:focusable="true"
         android:maxLines="8"
         android:scrollbars="vertical"
-        android:textSize="20dp" 
-        android:typeface="monospace"/>
+        android:textSize="20dp"/>
 
     <ImageView
         android:id="@+id/imageView1"

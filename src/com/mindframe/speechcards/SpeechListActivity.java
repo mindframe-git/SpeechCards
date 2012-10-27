@@ -1,14 +1,17 @@
 package com.mindframe.speechcards;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.ListAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +20,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mindframe.speechcards.model.Speech;
 
 public class SpeechListActivity extends Activity {
 
 	ListView lvSpeeches;
+	TextView tvTitleList;
 	BaseDatosHelper bdh;
 	List<Speech> speechList = new ArrayList<Speech>();
 	Context context;
@@ -39,9 +46,19 @@ public class SpeechListActivity extends Activity {
 		context = this.getApplicationContext();
 		
 		lvSpeeches = (ListView) findViewById(R.id.lvSpeeches);
+		tvTitleList = (TextView)findViewById(R.id.tvTitleList);
 
+		tvTitleList.setTypeface(Typeface.createFromAsset(getAssets(), "FONT.TTF"));
+		
+		
 		Bundle bundle = getIntent().getExtras();
 		action = bundle.getString("action");
+		
+		if(action.compareToIgnoreCase("play") == 0){
+			tvTitleList.setText(R.string.tvTitleListPlay);
+		}else if(action.compareToIgnoreCase("edit") == 0){
+			tvTitleList.setText(R.string.tvTitleListEdit);
+		}
 		
 		cargaLista();
 		
@@ -52,15 +69,17 @@ public class SpeechListActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
 				Bundle bun = new Bundle();
-				bun.putInt("id_speech", speechList.get(arg2).id_speech);
-				bun.putString("speechTitle", speechList.get(arg2).title);
+				bun.putInt("id_speech", speechList.get(arg2).getId_speech());
+				bun.putString("speechTitle", speechList.get(arg2).getTitle());
 				bun.putString("action", action);
 				
 				if(action.compareToIgnoreCase("play") == 0){
+					tvTitleList.setText(R.string.tvTitleListPlay);
 					Intent intent = new Intent(new Intent(SpeechListActivity.this, SpeechActivity.class));
 					intent.putExtras(bun);
 					startActivity(intent);
 				}else if(action.compareToIgnoreCase("edit") == 0){
+					tvTitleList.setText(R.string.tvTitleListEdit);
 					Intent intent = new Intent(new Intent(SpeechListActivity.this, ManageSpeechActivity.class));
 					intent.putExtras(bun);
 					startActivity(intent);
@@ -90,7 +109,7 @@ public class SpeechListActivity extends Activity {
 		builder.setMessage(R.string.dialMessageSpeech);
 		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				bdh.deleteSpeech(speechList.get(position).id_speech);
+				bdh.deleteSpeech(speechList.get(position).getId_speech());
 				Toast.makeText(context, R.string.toastDelSpeech, Toast.LENGTH_SHORT).show();
 				cargaLista();
 				dialog.cancel();
@@ -114,7 +133,7 @@ public class SpeechListActivity extends Activity {
 	}
 	
 	public void cargaLista(){
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 
 		speechList = bdh.getSpeechList();
 		

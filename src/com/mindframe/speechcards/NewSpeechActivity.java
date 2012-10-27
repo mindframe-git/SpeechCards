@@ -1,7 +1,16 @@
 package com.mindframe.speechcards;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mindframe.speechcards.model.Category;
+import com.mindframe.speechcards.model.Speech;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,7 +20,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +41,14 @@ import android.widget.Toast;
 public class NewSpeechActivity extends Activity {
 
 	EditText etNewSpeech;
-	TextView tvTitle, tvNew, btnNewSpeech;
+	TextView tvTitle, tvNew, btnNewSpeech, tvCategory;
+	Spinner spCategory;
+	Button btnAddCat;
+	
 	Context context;
 	int textSize;
 	BaseDatosHelper bdh;
+	List<Category> catList = new ArrayList<Category>();
 	
 	
 	final String TAG = getClass().getName();
@@ -51,21 +67,23 @@ public class NewSpeechActivity extends Activity {
 		//El tamaño de texto predeterminado es 20
 		textSize = 20;
 
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 2);
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 		btnNewSpeech = (TextView) findViewById(R.id.btnNewSpeech);
 		etNewSpeech = (EditText) findViewById(R.id.etNewSpeech);
 		tvTitle = (TextView)findViewById(R.id.tvTitle);
 		tvNew = (TextView)findViewById(R.id.tvNew);
+		tvCategory = (TextView)findViewById(R.id.tvCategoria);
+		spCategory = (Spinner)findViewById(R.id.spCategory);
+		btnAddCat = (Button)findViewById(R.id.btnAddCat);
 		
 		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
 		tvTitle.setTypeface(font);
 		tvNew.setTypeface(font);
 		btnNewSpeech.setTypeface(font);
 		etNewSpeech.setTypeface(font);
-		
+		tvCategory.setTypeface(font);
 		
 		tvTitle.setText(R.string.tvNewCollecion);
-		
 		
 		// Al pulsar enter, se crea la colección
 		grabado = false;
@@ -92,23 +110,106 @@ public class NewSpeechActivity extends Activity {
 			}
 		});
 		
+		//Spiner de categorias:
+		
+//		List<String> datos = new ArrayList<String>();
+//		
+//		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, datos);
+//		
+//		adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		
+//		spCategory.setAdapter(adaptador);
+		
+		loadSpinner();
+
+		btnAddCat.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showPopUpPhone();
+				
+			}
+		});
+		
+		//fin Spiner
+		
 	}
 
+	// show popup to edit information
+	private void showPopUpPhone() {
+		AlertDialog.Builder newCatBuilder = new AlertDialog.Builder(this);
+		newCatBuilder.setTitle(R.string.dialTitleNewCat);
+		final EditText catName = new EditText(this);
+		catName.setSingleLine();
+		
+		newCatBuilder.setView(catName);
+
+		newCatBuilder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Category cat = new Category();
+				cat.setName(catName.getText().toString().trim());
+				if(cat.getName().compareToIgnoreCase("") != 0){
+					if(!bdh.existsCategory(cat.getName())){
+						bdh.newCategory(cat);
+						
+						loadSpinner();
+					}else{
+						Log.d(TAG, "Ya existe categoría con ese nombre, bitch");
+					}
+				}else{
+					Log.d(TAG, "Debe escribir un nombre, mardito!");
+				}
+			}
+		});
+		newCatBuilder.setNegativeButton(R.string.dialCancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+		AlertDialog newCatDialog = newCatBuilder.create();
+		newCatDialog.show();
+	}
+	
+	public void loadSpinner(){
+		
+		
+		catList = bdh.getCatList();
+		List<String> catNames = new ArrayList<String>();
+		
+		for(Category cat : catList){
+			catNames.add(cat.getName());
+		}
+		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catNames);
+		
+		adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		spCategory.setAdapter(adaptador);
+		
+	}
+	
+	
 	public void nuevaColeccion() {
 		String speechTitle = etNewSpeech.getText().toString();
 		if (speechTitle == null || speechTitle.trim().compareToIgnoreCase("") == 0) {
 			Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
 		} else {
 			if (!bdh.existsSpeech(speechTitle)) {
-				int id_speech;
-				Bundle bun = new Bundle();
 
-				id_speech = bdh.newSpeech(speechTitle, textSize);
+				Bundle bun = new Bundle();
+				
+				Speech speech = new Speech();
+				speech.setSize(textSize);
+				speech.setTitle(speechTitle);
+				speech.setId_category(catList.get(spCategory.getSelectedItemPosition()).getId());
+				
+				speech.setId_speech(bdh.newSpeech(speech));
 
 				Intent intent = new Intent(NewSpeechActivity.this, ManageSpeechActivity.class);
-				bun.putString("speechTitle", speechTitle);
-				bun.putInt("id_speech", id_speech);
+				bun.putString("speechTitle", speech.getTitle());
+				bun.putInt("id_speech", speech.getId_speech());
 				bun.putInt("id_prev_card", -1);
+				
 				intent.putExtras(bun);
 
 				startActivity(intent);

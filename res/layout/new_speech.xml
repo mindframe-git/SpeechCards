@@ -10,8 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="25dp"
-        android:typeface="monospace" />
+        android:textSize="25dp" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -26,14 +25,14 @@
         android:scaleType="fitXY"
         android:src="@drawable/linestrans" />
 
-<!--     <ImageView -->
-<!--         android:id="@+id/btnNewSpeech" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignParentBottom="true" -->
-<!--         android:layout_centerHorizontal="true" -->
-<!--         android:layout_marginBottom="30dp" -->
-<!--         android:src="@drawable/btnnuevo" /> -->
+    <!-- <ImageView -->
+    <!-- android:id="@+id/btnNewSpeech" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignParentBottom="true" -->
+    <!-- android:layout_centerHorizontal="true" -->
+    <!-- android:layout_marginBottom="30dp" -->
+    <!-- android:src="@drawable/btnnuevo" /> -->
 
     <TextView
         android:id="@+id/tvNew"
@@ -42,6 +41,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
         android:text="@string/tvTitle"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -49,22 +49,52 @@
         android:id="@+id/etNewSpeech"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/btnNewSpeech"
         android:layout_below="@+id/tvNew"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:ems="10"
         android:maxLength="20"
-        android:singleLine="true" />
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
 
     <TextView
         android:id="@+id/btnNewSpeech"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etNewSpeech"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:text="@string/btnAceptar"
         android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etNewSpeech"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:text="@string/tvCategory" />
+
+    <Spinner
+        android:id="@+id/spCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/tvCategoria"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnAddCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spCategory"
+        android:layout_marginTop="10dp"
+        android:text="@string/btnAddCat" />
 
 </RelativeLayout>
