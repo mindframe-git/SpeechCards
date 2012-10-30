@@ -17,15 +17,17 @@ import android.widget.Toast;
 
 import com.mindframe.speechcards.model.Category;
 
-public class NewCategoryActivity extends Activity{
-	
+public class NewCategoryActivity extends Activity {
+
 	TextView tvTitle, tvNew, tvRed, tvGreen, tvBlue, tvBarraColor, btnNewCategory;
 	SeekBar sbRed, sbGreen, sbBlue;
 	EditText etNewCategory;
 	ImageView btnBack;
 	int alfa = 127;
 	int red, green, blue;
-	
+
+	String action;
+	int id_cat;
 	BaseDatosHelper bdh;
 	Context context;
 	final String TAG = getClass().getName();
@@ -37,43 +39,49 @@ public class NewCategoryActivity extends Activity{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_category);
-		
+
 		context = this.getApplicationContext();
 		
-		tvTitle = (TextView)findViewById(R.id.tvTitle);
-		tvNew = (TextView)findViewById(R.id.tvNew);
-		tvRed = (TextView)findViewById(R.id.tvRed);
-		tvGreen = (TextView)findViewById(R.id.tvGreen);
-		tvBlue = (TextView)findViewById(R.id.tvBlue);
-		tvBarraColor = (TextView)findViewById(R.id.tvBarraColor);
-		btnNewCategory = (TextView)findViewById(R.id.btnNewCategory);
-		sbRed = (SeekBar)findViewById(R.id.sbRed);
-		sbGreen = (SeekBar)findViewById(R.id.sbGreen);
-		sbBlue = (SeekBar)findViewById(R.id.sbBlue);
-		btnBack = (ImageView)findViewById(R.id.btnBack);
-		etNewCategory = (EditText)findViewById(R.id.etNewCategory);
-		
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
+
+		tvTitle = (TextView) findViewById(R.id.tvTitle);
+		tvNew = (TextView) findViewById(R.id.tvNew);
+		tvRed = (TextView) findViewById(R.id.tvRed);
+		tvGreen = (TextView) findViewById(R.id.tvGreen);
+		tvBlue = (TextView) findViewById(R.id.tvBlue);
+		tvBarraColor = (TextView) findViewById(R.id.tvBarraColor);
+		btnNewCategory = (TextView) findViewById(R.id.btnNewCategory);
+		sbRed = (SeekBar) findViewById(R.id.sbRed);
+		sbGreen = (SeekBar) findViewById(R.id.sbGreen);
+		sbBlue = (SeekBar) findViewById(R.id.sbBlue);
+		btnBack = (ImageView) findViewById(R.id.btnBack);
+		etNewCategory = (EditText) findViewById(R.id.etNewCategory);
+
 		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
-		
+
 		tvTitle.setTypeface(font);
 		tvNew.setTypeface(font);
 		tvRed.setTypeface(font);
 		tvGreen.setTypeface(font);
 		tvBlue.setTypeface(font);
 		btnNewCategory.setTypeface(font);
+
+		Bundle bundle = getIntent().getExtras();
+		action = bundle.getString("action");
+		id_cat = bundle.getInt("id_cat");
 		
-		
-		sbRed.setProgress(127);
-		sbGreen.setProgress(127);
-		sbBlue.setProgress(127);
-		
-		changeColor();
+		if (action.compareToIgnoreCase("edit") == 0) {
+			actionEdit();
+		} else if (action.compareToIgnoreCase("new") == 0) {
+			actionNew();
+		}
 
 		sbRed.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
+
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			}
@@ -91,6 +99,7 @@ public class NewCategoryActivity extends Activity{
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
+
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			}
@@ -108,6 +117,7 @@ public class NewCategoryActivity extends Activity{
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
+
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			}
@@ -119,17 +129,31 @@ public class NewCategoryActivity extends Activity{
 
 			}
 		});
+
+	}
+	
+	public void actionEdit(){
+		Category cat = bdh.getCategoryById(id_cat);
+		etNewCategory.setText(cat.getName());
+		String[] colores =  cat.getColor().split(",");
+		
+		sbRed.setProgress(Integer.valueOf(colores[1]));
+		sbGreen.setProgress(Integer.valueOf(colores[2]));
+		sbBlue.setProgress(Integer.valueOf(colores[3]));
+		
+		red = (Integer.valueOf(colores[1]));
+		green = (Integer.valueOf(colores[2]));
+		blue = (Integer.valueOf(colores[3]));
+		
+		changeColor();
+		
+		btnNewCategory.setText(R.string.btnMod);
 		
 		btnBack.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				if(etNewCategory.getText().toString().trim().compareToIgnoreCase("") == 0){
-					finish();
-				}else{
-					newCategory();
-				}
-				
+				finish();
 			}
 		});
 		
@@ -137,12 +161,46 @@ public class NewCategoryActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				newCategory();
-				
+				Category cat = new Category();
+				if(etNewCategory.getText().toString().trim().compareToIgnoreCase("") != 0){
+					cat.setId(id_cat);
+					cat.setName(etNewCategory.getText().toString());
+					cat.setColor(String.valueOf(alfa) + "," + String.valueOf(red) + "," + String.valueOf(green) + "," + String.valueOf(blue));
+					
+					bdh.updateCategory(cat);
+					finish();
+				}else {
+					Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
-		
+	}
 
+	public void actionNew() {
+		sbRed.setProgress(127);
+		sbGreen.setProgress(127);
+		sbBlue.setProgress(127);
+
+		changeColor();
+
+		btnBack.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (etNewCategory.getText().toString().trim().compareToIgnoreCase("") == 0) {
+					finish();
+				} else {
+					newCategory();
+				}
+			}
+		});
+
+		btnNewCategory.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				newCategory();
+			}
+		});
 	}
 
 	private void changeColor() {
@@ -150,29 +208,28 @@ public class NewCategoryActivity extends Activity{
 		tvBarraColor.setBackgroundColor(Color.argb(alfa, red, green, blue));
 
 	}
-	
-	private void newCategory(){
-		
+
+	private void newCategory() {
+
 		Category cat = new Category();
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
-		
+
 		String name = etNewCategory.getText().toString();
 		String stColor = String.valueOf(alfa) + "," + String.valueOf(red) + "," + String.valueOf(green) + "," + String.valueOf(blue);
-		
+
 		cat.setName(name);
 		cat.setColor(stColor);
-		
-		if(cat.getName().compareToIgnoreCase("") != 0){
-			if(!bdh.existsCategory(cat.getName())){
+
+		if (cat.getName().compareToIgnoreCase("") != 0) {
+			if (!bdh.existsCategory(cat.getName())) {
 				bdh.newCategory(cat);
-				
+
 				finish();
-			}else{
+			} else {
 				Toast.makeText(context, R.string.toastExistsCategory, Toast.LENGTH_SHORT).show();
 			}
-		}else{
+		} else {
 			Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}
 }

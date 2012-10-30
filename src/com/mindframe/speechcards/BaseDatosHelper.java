@@ -116,12 +116,12 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		try{
 			db.execSQL("ALTER TABLE SPEECH ADD COLOR TEXT");
 		}catch (SQLiteException e) {
-			// TODO: handle exception
+			//ya está hecho
 		}
 		try{
 			db.execSQL("ALTER TABLE SPEECH ADD ID_CATEGORY INTEGER");
 		}catch (SQLiteException e) {
-			// TODO: handle exception
+			//ya está hecho
 		}
 		
 		
@@ -136,7 +136,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		try{
 			db.execSQL(createTableCategory.toString());
 		}catch (SQLiteException e) {
-			// TODO: handle exception
+			//ya está hecho
 		}
 		
 		
@@ -407,6 +407,19 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	public void updateCategory(Category cat){
+		ContentValues cv = new ContentValues();
+		cv.put(categoryColumns.COLOR, cat.getColor());
+		cv.put(categoryColumns.NAME, cat.getName());
+		
+		String whereClause = categoryColumns._ID + "=" + cat.getId();
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		db.update(TABLE_NAME_CATEGORY, cv, whereClause, null);
+		
+		db.close();
+	}
 	
 	/**
 	 * Borramos la tarjeta que recibimos y actualizamos la ordenación
@@ -470,6 +483,29 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		
 		db.delete(TABLE_NAME_CARD, whereClauseCard, null);
 		db.delete(TABLE_NAME_SPEECH, whereClauseSpeech, null);
+		
+		db.close();
+	}
+	
+	/**
+	 * 1º Se borrará el id_category de las colecciones asociadas
+	 * 2º Se borra la categoría
+	 * 
+	 * @param cat
+	 */
+	public void deleteCategory(Category cat){
+		SQLiteDatabase db = this.getReadableDatabase();
+		//Actualizar colecciones:
+		ContentValues cv  = new ContentValues();
+		cv.put(speechColums.ID_CATEGORY, "0");
+		String whereClause = speechColums.ID_CATEGORY+"=?";
+		String whereArgs[] = new String[]{String.valueOf(cat.getId())};
+		
+		db.update(TABLE_NAME_SPEECH, cv, whereClause, whereArgs);
+		
+		//Borrar categoría:
+		db.delete(TABLE_NAME_CATEGORY, categoryColumns._ID+"="+cat.getId(), null);
+		
 		
 		db.close();
 	}
@@ -539,7 +575,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 			cat.setName(c.getString(1));
 			cat.setColor(c.getString(2));
 		}
-		
+		db.close();
 		return cat;
 	}
 	

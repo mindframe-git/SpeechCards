@@ -109,33 +109,6 @@ public class ManageSpeechActivity extends Activity{
 			}
 		});
 		
-//		lvCardList.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, final long arg3) {
-//				
-//				Intent intent = new Intent(ManageSpeechActivity.this, EditCardActivity.class);
-//				Bundle bun = new Bundle();
-//				bun.putInt("id_card", cardList.get(arg2).getId_card());
-//				bun.putString("speechTitle", speechTitle);
-//				
-//				intent.putExtras(bun);
-//				startActivity(intent);
-//				
-//				ImageView btnRemove = (ImageView) arg1.findViewById(R.id.btnRemove);
-//				btnRemove.setOnClickListener(new OnClickListener() {
-//					
-//					@Override
-//					public void onClick(View v) {
-//						Log.d(TAG, "arg2: " +arg2+ " arg3: " + arg3);
-//						
-//						crearDialogoConfirmacion(arg2);
-//						
-//					}
-//				});
-//			}
-//		});
-		
 	}
 	
 	private Dialog crearDialogoConfirmacion(final int position) {
@@ -188,7 +161,7 @@ public class ManageSpeechActivity extends Activity{
 
 	private void loadCardList() {
 		cardList = bdh.getCardsByIdSpeech(id_speech);
-		CardListAdapter adapter = new CardListAdapter(context, R.layout.cardline, cardList);
+		CardListAdapter adapter = new CardListAdapter(context, R.layout.manage_speech_line, cardList);
 		
 		if(cardList.size() != 0)
 			lastCard = cardList.get(cardList.size()-1);
@@ -197,28 +170,6 @@ public class ManageSpeechActivity extends Activity{
 		
 		
 	}
-
-//	private Dialog crearDialogoConfirmacion(final int position) {
-//
-//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setTitle(R.string.dialTitle);
-//		builder.setMessage(R.string.dialMessage);
-//		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
-//			public void onClick(DialogInterface dialog, int which) {
-//				bdh.delCard(cardList.get(position));
-//				Toast.makeText(context, R.string.toastDelCard, Toast.LENGTH_SHORT).show();
-//				loadCardList();
-//				dialog.cancel();
-//			}
-//		});
-//		builder.setNegativeButton(R.string.dialCancel, new DialogInterface.OnClickListener() {
-//			public void onClick(DialogInterface dialog, int which) {
-//				dialog.cancel();
-//			}
-//		});
-//		
-//		return builder.show();
-//	}
 	
 	@Override
 	public void onResume(){

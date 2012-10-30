@@ -294,19 +294,4 @@ public class SpeechActivity extends Activity {
 			}
 		}
 	}
-
-//	protected void onResume() {
-//		super.onResume();
-//
-//		Log.d(TAG, "onResume: id: " + id_speech);
-//		cardList = bdh.getCardsByIdSpeech(id_speech);
-//
-//		if (cardList.isEmpty()) {
-//			Toast.makeText(context, R.string.toastNoCards, Toast.LENGTH_SHORT).show();
-//			finish();
-//		}
-//
-//		currentCard = getFirstCard();
-//		writeCard(currentCard);
-//	}
 }

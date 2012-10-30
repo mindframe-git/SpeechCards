@@ -45,11 +45,13 @@
 	<string name="tvRed">Rojo</string>
 	<string name="tvGreen">Verde</string>
 	<string name="tvBlue">Azul</string>
+	<string name="tvCategoryList">Lista de categorias</string>
+	<string name="tvNueva">Nueva</string>
 	
 	
 <!--     Menus -->
-	<string name="mnEditSpeech">Editar colección</string>
-    <string name="mnDelSpeech">Borrar colección</string>
+	<string name="mnEdit">Editar</string>
+    <string name="mnDel">Borrar</string>
     <string name="mnDelCard">Borrar tarjeta</string>
     <string name="mnAddCard">Añadir tarjeta</string>
     <string name="mnHelp">Ayuda</string>
@@ -74,7 +76,7 @@
     
 <!--     Dialogs -->
     <string name="dialTitle">Confirmacion</string>
-    <string name="dialMessageSpeech">¿Desea borrar la colección actual? La acción no se podrá deshacer.</string>
+    <string name="dialMessageSpeech">¿Desea borrar la selección actual? La acción no se podrá deshacer.</string>
     <string name="dialMessageCard">¿Desea borrar la tarjeta? La acción no se podrá deshacer.</string>
     <string name="dialAcept">Aceptar</string>
     <string name="dialCancel">Cancelar</string>

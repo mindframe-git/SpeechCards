@@ -126,8 +126,9 @@
         android:id="@+id/btnNewCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/sbBlue"
         android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
         android:text="@string/btnAceptar"
         android:textSize="40dp" />
 

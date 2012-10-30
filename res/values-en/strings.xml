@@ -45,6 +45,8 @@
     <string name="tvRed">Red</string>
 	<string name="tvGreen">Green</string>
 	<string name="tvBlue">Blue</string>
+	<string name="tvCategoryList">Category list</string>
+	<string name="tvNueva">New</string>
     
     
     
@@ -77,8 +79,8 @@
         <br>Si quieres poner el texto <i>en cursivas</i>, usa los %símbolos de porcentaje%]]></string>
 
     <!-- Menus -->
-    <string name="mnEditSpeech">Edit Collection</string>
-    <string name="mnDelSpeech">Delete Collection</string>
+    <string name="mnEdit">Edit</string>
+    <string name="mnDel">Delete</string>
     <string name="mnDelCard">Delete Card</string>
     <string name="mnAddCard">Add Card</string>
     <string name="mnHelp">Help</string>
@@ -103,7 +105,7 @@
     
     <!-- Dialogs -->
     <string name="dialTitle">Confirm</string>
-    <string name="dialMessageSpeech">Do you want to delete the current collecion?</string>
+    <string name="dialMessageSpeech">Do you want to delete the current selection?</string>
     <string name="dialMessageCard">Do you want to delete the card?</string>
     <string name="dialAcept">Accept</string>
     <string name="dialCancel">Cancel</string>

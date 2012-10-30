@@ -13,10 +13,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -25,18 +26,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindframe.speechcards.adapter.ListAdapter;
-import com.mindframe.speechcards.model.Speech;
+import com.mindframe.speechcards.adapter.CategoryAdapter;
+import com.mindframe.speechcards.model.Category;
 
-public class SpeechListActivity extends Activity {
-
-	ListView lvSpeeches;
-	TextView tvTitleList;
+public class CategoryListActivity extends Activity{
+	
+	TextView tvTitleList, btnNewCategory;
+	ListView lvCat;
+	
+	List<Category> catList = new ArrayList<Category>();
 	BaseDatosHelper bdh;
-	List<Speech> speechList = new ArrayList<Speech>();
 	Context context;
-	String action;
-
 	final String TAG = getClass().getName();
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,56 +45,50 @@ public class SpeechListActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.speech_list);
+		setContentView(R.layout.category_list);
 		context = this.getApplicationContext();
-
-		lvSpeeches = (ListView) findViewById(R.id.lvSpeeches);
-		tvTitleList = (TextView) findViewById(R.id.tvTitleList);
-
+		
+		
+		tvTitleList = (TextView)findViewById(R.id.tvTitleList);
+		btnNewCategory = (TextView)findViewById(R.id.btnNewCategory);
+		lvCat = (ListView)findViewById(R.id.lvCat);
+		
 		tvTitleList.setTypeface(Typeface.createFromAsset(getAssets(), "FONT.TTF"));
-
-		Bundle bundle = getIntent().getExtras();
-		action = bundle.getString("action");
-
-		if (action.compareToIgnoreCase("play") == 0) {
-			tvTitleList.setText(R.string.tvTitleListPlay);
-		} else if (action.compareToIgnoreCase("edit") == 0) {
-			tvTitleList.setText(R.string.tvTitleListEdit);
-		}
-
+		btnNewCategory.setTypeface(Typeface.createFromAsset(getAssets(), "FONT.TTF"));
 		cargaLista();
-
-		lvSpeeches.setOnItemClickListener(new OnItemClickListener() {
+		
+		lvCat.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				Intent resultIntent;
 
-				Bundle bun = new Bundle();
-				bun.putInt("id_speech", speechList.get(arg2).getId_speech());
-				bun.putString("speechTitle", speechList.get(arg2).getTitle());
-				bun.putString("action", action);
-
-				if (action.compareToIgnoreCase("play") == 0) {
-					tvTitleList.setText(R.string.tvTitleListPlay);
-					Intent intent = new Intent(new Intent(SpeechListActivity.this, SpeechActivity.class));
-					intent.putExtras(bun);
-					startActivity(intent);
-					finish();
-				} else if (action.compareToIgnoreCase("edit") == 0) {
-					tvTitleList.setText(R.string.tvTitleListEdit);
-					Intent intent = new Intent(new Intent(SpeechListActivity.this, ManageSpeechActivity.class));
-					intent.putExtras(bun);
-					startActivity(intent);
-					finish();
-				}
-
+				resultIntent = new Intent();
+				resultIntent.putExtra("id_category", String.valueOf(catList.get(arg2).getId()));
+				setResult(Activity.RESULT_OK, resultIntent);
+				finish();
+				
 			}
 		});
-
-		registerForContextMenu(lvSpeeches);
-
+		
+		btnNewCategory.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Bundle bun = new Bundle();
+				bun.putString("action", "new");
+				Intent intent = new Intent(CategoryListActivity.this, NewCategoryActivity.class);
+				intent.putExtras(bun);
+				
+				
+				startActivity(intent);
+			}
+		});
+		
+		registerForContextMenu(lvCat);
+		
 	}
-
+	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -106,7 +100,6 @@ public class SpeechListActivity extends Activity {
 
 		inflater.inflate(R.menu.opt_menu, menu);
 	}
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
@@ -115,9 +108,9 @@ public class SpeechListActivity extends Activity {
 		case R.id.optEditSpeech:
 			Bundle bun = new Bundle();
 			bun.putString("action", "edit");
-			bun.putInt("id_speech", speechList.get(info.position).getId_speech());
+			bun.putInt("id_cat", catList.get(info.position).getId());
 			
-			Intent intent = new Intent(SpeechListActivity.this, NewSpeechActivity.class);
+			Intent intent = new Intent(CategoryListActivity.this, NewCategoryActivity.class);
 			
 			intent.putExtras(bun);
 			
@@ -134,7 +127,7 @@ public class SpeechListActivity extends Activity {
 			return super.onContextItemSelected(item);
 		}
 	}
-
+	
 	private Dialog crearDialogoConfirmacion(final int position) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -142,7 +135,7 @@ public class SpeechListActivity extends Activity {
 		builder.setMessage(R.string.dialMessageSpeech);
 		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				bdh.deleteSpeech(speechList.get(position).getId_speech());
+				bdh.deleteCategory(catList.get(position));
 				Toast.makeText(context, R.string.toastDelSpeech, Toast.LENGTH_SHORT).show();
 				cargaLista();
 				dialog.cancel();
@@ -156,26 +149,22 @@ public class SpeechListActivity extends Activity {
 
 		return builder.show();
 	}
-
+	
+	public void cargaLista(){
+		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
+		
+		catList = bdh.getCatList();
+		
+		CategoryAdapter adapter = new CategoryAdapter(context, R.layout.category_line, catList);
+		
+		lvCat.setAdapter(adapter);
+		
+	}
+	
 	@Override
-	public void onResume() {
+	public void onResume(){
 		super.onResume();
-		Log.d(TAG, "onResume()");
 		cargaLista();
 	}
 
-	public void cargaLista() {
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
-
-		speechList = bdh.getSpeechList();
-
-		if (speechList.isEmpty()) {
-			Toast.makeText(context, R.string.toastNoSpeech, Toast.LENGTH_SHORT).show();
-			finish();
-		}
-
-		ListAdapter adaptador = new ListAdapter(context, R.layout.speech_line, speechList);
-
-		lvSpeeches.setAdapter(adaptador);
-	}
 }

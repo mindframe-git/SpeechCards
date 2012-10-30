@@ -38,13 +38,12 @@ public class CardListAdapter extends ArrayAdapter{
 	@SuppressWarnings("static-access")
 	public View getView(final int position, View convertView, ViewGroup parent){
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-		convertView = inflater.inflate(R.layout.cardline, null);
+		convertView = inflater.inflate(R.layout.manage_speech_line, null);
 		
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 		
 		final TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		final ImageView btnEdit = (ImageView)convertView.findViewById(R.id.btnEdit);
-//		final ImageView btnRemove = (ImageView)convertView.findViewById(R.id.btnRemove);
 		tvTitle.setText(cardList.get(position).getHeader());
 		
 		Typeface font = Typeface.createFromAsset(context.getAssets(), "FONT.TTF");
@@ -64,22 +63,6 @@ public class CardListAdapter extends ArrayAdapter{
 				context.startActivity(intent);
 			}
 		});
-		
-//		
-//		btnRemove.setOnClickListener(new OnClickListener() {
-//			
-//			@SuppressWarnings("unchecked")
-//			@Override
-//			public void onClick(View v) {
-//				//TODO: hacer botón de confirmación para borrar tarjetas.
-//				
-//				bdh.delCard(cardList.get(position));
-//				remove(cardList.get(position));
-//				notifyDataSetChanged();
-//			}
-//		});
-		
-		
 		
 		return convertView;
 		

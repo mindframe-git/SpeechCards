@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/optEditSpeech"
-        android:title="@string/mnEditSpeech">
+        android:title="@string/mnEdit">
     </item>
     <item
         android:id="@+id/optDelSpeech"
-        android:title="@string/mnDelSpeech">
+        android:title="@string/mnDel">
     </item>
 
 </menu>

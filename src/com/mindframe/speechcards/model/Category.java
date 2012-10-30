@@ -46,9 +46,12 @@ public class Category {
 	 */
 	public int getColorCode(){
 		
-		String[] arrColors = color.split(",");
+		if(this.color != null){
+			String[] arrColors = color.split(",");
+			return Color.argb(Integer.valueOf(arrColors[0]), Integer.valueOf(arrColors[1]), Integer.valueOf(arrColors[2]), Integer.valueOf(arrColors[3]));
+		}else
+			return Color.WHITE;
 		
-		return Color.argb(Integer.valueOf(arrColors[0]), Integer.valueOf(arrColors[1]), Integer.valueOf(arrColors[2]), Integer.valueOf(arrColors[3]));
 		
 	}
 	

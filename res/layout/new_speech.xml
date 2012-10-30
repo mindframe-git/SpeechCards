@@ -26,14 +26,6 @@
         android:scaleType="fitXY"
         android:src="@drawable/linestrans" />
 
-    <!-- <ImageView -->
-    <!-- android:id="@+id/btnNewSpeech" -->
-    <!-- android:layout_width="wrap_content" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_alignParentBottom="true" -->
-    <!-- android:layout_centerHorizontal="true" -->
-    <!-- android:layout_marginBottom="30dp" -->
-    <!-- android:src="@drawable/btnnuevo" /> -->
 
     <TextView
         android:id="@+id/tvNew"
@@ -60,42 +52,29 @@
 
         <requestFocus />
     </EditText>
+    
+    <TextView
+        android:id="@+id/tvCategoryBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/etNewSpeech"
+        android:layout_marginTop="20dp"
+        android:background="#cccccc"
+        android:padding="10dp"
+        android:text="categoria"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/btnNewSpeech"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-		android:layout_below="@+id/btnAddCat"    
-		android:layout_marginTop="20dp"    
+        android:layout_below="@+id/tvCategoryBar"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
         android:text="@string/btnAceptar"
         android:textSize="40dp" />
-
-    <TextView
-        android:id="@+id/tvCategoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etNewSpeech"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
-        android:text="@string/tvCategory" />
-
-    <Spinner
-        android:id="@+id/spCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:layout_below="@+id/tvCategoria"
-        android:layout_marginTop="10dp" />
-
-    <Button
-        android:id="@+id/btnAddCat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/spCategory"
-        android:layout_marginTop="10dp"
-        android:text="@string/btnAddCat" />
 
 </RelativeLayout>

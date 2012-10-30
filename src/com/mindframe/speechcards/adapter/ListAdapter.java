@@ -31,7 +31,7 @@ public class ListAdapter extends ArrayAdapter {
 	
 	public View getView(int position, View convertView, ViewGroup parent){
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-		convertView = inflater.inflate(R.layout.linelist, null);
+		convertView = inflater.inflate(R.layout.speech_line, null);
 		
 		TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 		TextView tvNCard = (TextView)convertView.findViewById(R.id.tvNCard);
