@@ -9,8 +9,18 @@
         android:layout_width="107dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/tvCategory"
+        android:layout_alignParentRight="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvTitle"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 
     <TextView
@@ -18,22 +28,9 @@
         android:layout_width="106dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/tvTitle"
-        android:layout_below="@+id/tvTitle"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#000000"/>
-
-    <TextView
-        android:id="@+id/tvCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvNCard"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:background="#CCCCCC"
-        android:textColor="#000000"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"/>
+        android:layout_below="@+id/tvCategory"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000000" />
 
 </RelativeLayout>

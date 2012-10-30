@@ -1,4 +1,4 @@
-package adapter;
+package com.mindframe.speechcards.adapter;
 
 import java.util.List;
 

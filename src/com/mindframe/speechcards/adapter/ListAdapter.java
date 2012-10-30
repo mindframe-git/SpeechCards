@@ -1,4 +1,4 @@
-package adapter;
+package com.mindframe.speechcards.adapter;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.mindframe.speechcards.BaseDatosHelper;
 import com.mindframe.speechcards.R;
 import com.mindframe.speechcards.model.Card;
+import com.mindframe.speechcards.model.Category;
 import com.mindframe.speechcards.model.Speech;
 
 public class ListAdapter extends ArrayAdapter {
@@ -46,12 +47,22 @@ public class ListAdapter extends ArrayAdapter {
 		tvNCard.setTypeface(font);
 		tvCategory.setTypeface(font);
 		
+		
 		tvTitle.setText(speech.getTitle());
-		String cat = bdh.getCategoryById(speech.getId_category()).getName();
-		if(cat == null || cat.trim().compareToIgnoreCase("") == 0)	{
+		Category cat = new Category();
+		cat = bdh.getCategoryById(speech.getId_category());
+		
+		if(cat.getColor() != null){
+			tvTitle.setBackgroundColor(cat.getColorCode());
+			tvNCard.setBackgroundColor(cat.getColorCode());
+			tvCategory.setBackgroundColor(cat.getColorCode());
+		}
+		
+		String catName = cat.getName();
+		if(catName == null || catName.trim().compareToIgnoreCase("") == 0)	{
 			tvCategory.setText(R.string.tvNoCategory);
 		}else{
-			tvCategory.setText(cat);
+			tvCategory.setText(catName);
 		}
 		
 		List<Card> cardList = bdh.getCardsByIdSpeech(speech.getId_speech());

@@ -6,6 +6,7 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Speech Cards</string>
     <string name="card">card</string>
+    <string name="defaultCat">No category</string>
 
     <!-- Buttons -->
     
@@ -33,13 +34,17 @@
     <string name="AddCards">Add Cards</string>
 
     <!-- TextViews -->
-    <string name="tvTitle">Collection Title:</string>
+    <string name="tvTitle">Title:</string>
     <string name="tvNewCollecion">New Collection</string>
     <string name="tvTextSize">Text size:</string>
     <string name="tvTitleListEdit">Edit</string>
     <string name="tvTitleListPlay">Play</string>
     <string name="tvCategory">Category</string>
     <string name="tvNoCategory">No category</string>
+    <string name="tvNewCategory">New category</string>
+    <string name="tvRed">Red</string>
+	<string name="tvGreen">Green</string>
+	<string name="tvBlue">Blue</string>
     
     
     
@@ -72,11 +77,11 @@
         <br>Si quieres poner el texto <i>en cursivas</i>, usa los %símbolos de porcentaje%]]></string>
 
     <!-- Menus -->
+    <string name="mnEditSpeech">Edit Collection</string>
     <string name="mnDelSpeech">Delete Collection</string>
     <string name="mnDelCard">Delete Card</string>
     <string name="mnAddCard">Add Card</string>
     <string name="mnHelp">Help</string>
-    <string name="mnEditSpeech">Edit</string>
 
     <!-- Toasts -->
     <string name="toastVoidBody">You must enter something in the body.</string>
@@ -91,6 +96,7 @@
     <string name="toastVoidName">You must enter a name.</string>
     <string name="toastDelSpeech">Collection deleted.</string>
     <string name="toastExistsSpeech">There is already a collection with that name.</string>
+    <string name="toastExistsCategory">There is already a category with that name.</string>
     <string name="toastNoSpeech">No collections.</string>
     <string name="toastSaveCard">Card saved.</string>
     <string name="toastUpdateSize">Text size saved.</string>

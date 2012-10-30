@@ -1,13 +1,14 @@
 package com.mindframe.speechcards.model;
 
+import android.graphics.Color;
+
 public class Category {
 
 	int id;
 	String name;
 	String color;
-	public Category(int id, String name, String color) {
+	public Category(String name, String color) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.color = color;
 	}
@@ -32,6 +33,23 @@ public class Category {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	
+	/**
+	 * 
+	 * Esta función coge el atributo color, 
+	 * que estará almacenado de la siguiente 
+	 * forma "alfa,rojo,verde,azul"
+	 * y devuelve el código del color.
+	 * 
+	 * @return int color
+	 */
+	public int getColorCode(){
+		
+		String[] arrColors = color.split(",");
+		
+		return Color.argb(Integer.valueOf(arrColors[0]), Integer.valueOf(arrColors[1]), Integer.valueOf(arrColors[2]), Integer.valueOf(arrColors[3]));
+		
 	}
 	
 	

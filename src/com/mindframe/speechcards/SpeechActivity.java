@@ -45,6 +45,8 @@ public class SpeechActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.card);
+		
+		context = this.getApplicationContext();
 
 		btnNext = (TextView) findViewById(R.id.btnNext);
 		btnPrev = (TextView) findViewById(R.id.btnPrev);
@@ -64,7 +66,7 @@ public class SpeechActivity extends Activity {
 		btnPrev.setTypeface(font);
 
 		cardList = new ArrayList<Card>();
-		context = this.getApplicationContext();
+		
 
 		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
 

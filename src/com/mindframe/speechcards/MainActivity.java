@@ -12,18 +12,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.mindframe.speechcards.R;
 import com.mindframe.speechcards.model.Speech;
 
 public class MainActivity extends Activity {
 
-//	ImageView btnEditSpeech, btnPlaySpeech, btnNewSpeech;
 	TextView tvTitleApp, tvNew, tvEdit, tvPlay;
-	Spinner spSpeechs;
-	BaseDatosHelper bdh;
 	Context context;
 
 	List<Speech> speechList = new ArrayList<Speech>();
@@ -53,8 +48,6 @@ public class MainActivity extends Activity {
 		tvEdit.setTypeface(font);
 		tvPlay.setTypeface(font);
 		
-		bdh = new BaseDatosHelper(context, "SpeechCards", null, 3);
-
 		
 		tvPlay.setOnClickListener(new OnClickListener() {
 
@@ -92,7 +85,11 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(MainActivity.this, NewSpeechActivity.class));
+				Bundle bun = new Bundle();
+				bun.putString("action", "new");
+				Intent intent = new Intent(MainActivity.this, NewSpeechActivity.class);
+				intent.putExtras(bun);
+				startActivity(intent);
 				
 			}
 		});

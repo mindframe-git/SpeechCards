@@ -6,6 +6,7 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Speech Cards</string>
     <string name="card">tarjeta</string>
+    <string name="defaultCat">Sin categoría</string>
 
 <!--     Buttons -->
     <string name="btnNext">Siguiente</string>
@@ -33,19 +34,25 @@
     <string name="AddCards">Añadir Tarjetas</string>
 
 <!--     TextViews -->
-    <string name="tvTitle">Título de la colección:</string>
-    <string name="tvNewCollecion">Nueva coleeción</string>
+    <string name="tvTitle">Título:</string>
+    <string name="tvNewCollecion">Nueva coleción</string>
 	<string name="tvTextSize">Tamaño del texto:</string>
 	<string name="tvTitleListEdit">Editar</string>
     <string name="tvTitleListPlay">Reproducir</string>
     <string name="tvCategory">Categoría</string>
 	<string name="tvNoCategory">Sin categoría</string>
+	<string name="tvNewCategory">Nueva categoría</string>
+	<string name="tvRed">Rojo</string>
+	<string name="tvGreen">Verde</string>
+	<string name="tvBlue">Azul</string>
+	
+	
 <!--     Menus -->
+	<string name="mnEditSpeech">Editar colección</string>
     <string name="mnDelSpeech">Borrar colección</string>
     <string name="mnDelCard">Borrar tarjeta</string>
     <string name="mnAddCard">Añadir tarjeta</string>
     <string name="mnHelp">Ayuda</string>
-    <string name="mnEditSpeech">Editar</string>
 
 <!--     Toasts -->
     <string name="toastVoidBody">Debe escribir algo en el cuerpo.</string>
@@ -60,6 +67,7 @@
     <string name="toastVoidName">Debe introducir un nombre.</string>
     <string name="toastDelSpeech">Colección borrada.</string>
     <string name="toastExistsSpeech">Ya existe una colección con ese nombre.</string>
+    <string name="toastExistsCategory">Ya existe una categoría con ese nombre.</string>
     <string name="toastNoSpeech">No hay ningúna colección.</string>
     <string name="toastSaveCard">Se ha guardado la tarjeta.</string>
     <string name="toastUpdateSize">Se ha actualizado el tamaño.</string>
