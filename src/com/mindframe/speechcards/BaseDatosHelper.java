@@ -185,7 +185,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor c = db.query(TABLE_NAME_SPEECH, columns, null, null, null, null, speechColums.ID_CATEGORY, null);
+		Cursor c = db.query(TABLE_NAME_SPEECH, columns, null, null, null, null, speechColums.ID_CATEGORY + " desc", null);
 		
 		if(c.moveToFirst()){
 			do{
