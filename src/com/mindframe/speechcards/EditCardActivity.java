@@ -72,7 +72,9 @@ public class EditCardActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				bdh.updateCard(currentCard, etHeader.getText().toString(), etBody.getText().toString());
+				currentCard.setBody(etBody.getText().toString());
+				currentCard.setHeader(etHeader.getText().toString());
+				bdh.updateCard(currentCard);
 				finish();
 				
 			}
@@ -99,11 +101,13 @@ public class EditCardActivity extends Activity{
 		});
 		
 	}
-	@Override
-	public void onDestroy(){
-		super.onDestroy();
-		
-		bdh.updateCard(currentCard, etHeader.getText().toString(), etBody.getText().toString());
-	}
+	
+	//Al pulsar back se guarda la tarjeta, pero creo que no es buena idea...
+//	@Override
+//	public void onDestroy(){
+//		super.onDestroy();
+//		
+//		bdh.updateCard(currentCard, etHeader.getText().toString(), etBody.getText().toString());
+//	}
 	
 }

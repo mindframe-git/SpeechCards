@@ -3,6 +3,9 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mindframe.speechcards.model.Category;
+import com.mindframe.speechcards.model.Speech;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +19,10 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindframe.speechcards.model.Category;
-import com.mindframe.speechcards.model.Speech;
 
 /**
  * 
@@ -37,6 +39,7 @@ public class NewSpeechActivity extends Activity {
 
 	EditText etNewSpeech;
 	TextView tvTitle, tvNew, btnNewSpeech, tvCategoryBar;
+	ImageView btnBack;
 
 	Context context;
 	BaseDatosHelper bdh;
@@ -64,6 +67,7 @@ public class NewSpeechActivity extends Activity {
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		tvNew = (TextView) findViewById(R.id.tvNew);
 		tvCategoryBar = (TextView) findViewById(R.id.tvCategoryBar);
+		btnBack = (ImageView)findViewById(R.id.btnBack);
 
 
 		Typeface font = Typeface.createFromAsset(getAssets(), "FONT.TTF");
@@ -112,13 +116,29 @@ public class NewSpeechActivity extends Activity {
 
 	private void actionEdit() {
 
-		tvTitle.setText("Editar Colección");
-		btnNewSpeech.setText("Guardar");
+		tvTitle.setText(R.string.tvEditCollecion);
+		btnNewSpeech.setText(R.string.btnMod);
 		final Speech speech = bdh.getSpeechById(id_speech);
 		etNewSpeech.setText(speech.getTitle());
 		currentCat = bdh.getCategoryById(speech.getId_category());
 		pintaCategoria();
 		
+		btnBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (etNewSpeech.getText().toString().trim().compareToIgnoreCase("") == 0) {
+					Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
+				} else {
+					speech.setTitle(etNewSpeech.getText().toString());
+					speech.setId_category(currentCat.getId());
+
+					bdh.updateSpeech(speech);
+
+					finish();
+				}
+			}
+		});
 
 		btnNewSpeech.setOnClickListener(new OnClickListener() {
 
@@ -142,7 +162,9 @@ public class NewSpeechActivity extends Activity {
 
 
 	private void actionNew() {
-
+		
+		btnBack.setVisibility(View.GONE);
+		
 		// Al pulsar enter, se crea la colección
 		grabado = false;
 		etNewSpeech.setOnKeyListener(new OnKeyListener() {

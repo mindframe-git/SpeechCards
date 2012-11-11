@@ -3,6 +3,9 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mindframe.speechcards.adapter.CategoryAdapter;
+import com.mindframe.speechcards.model.Category;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -26,8 +29,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindframe.speechcards.adapter.CategoryAdapter;
-import com.mindframe.speechcards.model.Category;
 
 public class CategoryListActivity extends Activity{
 	
@@ -132,11 +133,11 @@ public class CategoryListActivity extends Activity{
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.dialTitle);
-		builder.setMessage(R.string.dialMessageSpeech);
+		builder.setMessage(R.string.dialMessageCategory);
 		builder.setPositiveButton(R.string.dialAcept, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				bdh.deleteCategory(catList.get(position));
-				Toast.makeText(context, R.string.toastDelSpeech, Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.toastDelCategory, Toast.LENGTH_SHORT).show();
 				cargaLista();
 				dialog.cancel();
 			}

@@ -4,6 +4,8 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mindframe.speechcards.model.Speech;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.mindframe.speechcards.model.Speech;
 
 public class MainActivity extends Activity {
 

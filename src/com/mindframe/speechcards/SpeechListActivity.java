@@ -3,6 +3,9 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mindframe.speechcards.adapter.ListAdapter;
+import com.mindframe.speechcards.model.Speech;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,8 +28,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindframe.speechcards.adapter.ListAdapter;
-import com.mindframe.speechcards.model.Speech;
 
 public class SpeechListActivity extends Activity {
 

@@ -3,6 +3,10 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mindframe.speechcards.model.Card;
+import com.mindframe.speechcards.model.Category;
+import com.mindframe.speechcards.model.Speech;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,9 +17,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.mindframe.speechcards.model.Card;
-import com.mindframe.speechcards.model.Category;
-import com.mindframe.speechcards.model.Speech;
 /**
  * 
  * Crea la base de datos y realiza 
@@ -103,7 +104,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		db.execSQL(createTableCategory.toString());
 	}
 
-	//Actualización version 2 db
+	//Actualización version 3 db
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.d(TAG, "upgradeDB. Old: " + oldVersion + ", new: " + newVersion);
@@ -152,6 +153,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		cv.put(speechColums.TITLE, speech.getTitle().trim());
 		cv.put(speechColums.SIZE, speech.getSize());
 		cv.put(speechColums.ID_CATEGORY, speech.getId_category());
+		cv.put(speechColums.COLOR, speech.getColor());
 		
 		id_speech = (int) db.insert(TABLE_NAME_SPEECH, null, cv);
 		db.close();
@@ -291,6 +293,66 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+//	private boolean upCard(Card curr){
+//		/**
+//		 * Caso: una tarjeta de enmedio:
+//		 * curr: La tarjeta a subir.
+//		 * prev: La tarjeta anterior.
+//		 * next: La tarjeta posterior.
+//		 * 
+//		 * next.prev = curr.prev
+//		 * 
+//		 * prev.next = curr.next
+//		 * curr.prev = prev.prev
+//		 * prev.prev = curr.id
+//		 * curr.next = prev.id
+//		 */
+//		
+//		//Si la anterior es 0 no se puede subir.
+//		if(curr.getId_prev_card() == 0){
+//			return false;
+//		}
+//		
+//		Card prev = getCardById(curr.getId_prev_card());
+//		
+//		//Si la posterior es 0 es la última tarjeta, no hay siguiente.
+//		if(curr.getId_next_card() != 0){
+//			Card next = getCardById(curr.getId_next_card());
+//			
+//			next.setId_prev_card(curr.getId_prev_card());
+//			updateCard(next);
+//		}
+//		
+//		prev.setId_next_card(curr.getId_next_card());
+//		curr.setId_prev_card(prev.getId_prev_card());
+//		prev.setId_prev_card(curr.getId_next_card());
+//		curr.setId_next_card(prev.getId_card());
+//		
+//		updateCard(curr);
+//		updateCard(prev);
+//		
+//		
+//		
+//		return true;
+//	}
+	
+//	private boolean downCard(Card curr){
+//		
+//		//Si la posterior es 0 no se puede bajar.
+//		if(curr.getId_next_card() == 0)
+//			return false;
+//		
+//		if(curr.getId_prev_card() != 0){
+//			Card prev = getCardById(curr.getId_prev_card());
+//			
+//		}
+//		Card next = getCardById(curr.getId_next_card());
+//		
+//		
+//		
+//		return true;
+//	}
+	
 	public List<Card> getCardsByIdSpeech(int id_speech){
 		List<Card> cardList = new ArrayList<Card>();
 		
@@ -367,16 +429,18 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 
 	/**
 	 * Aquí recibiré una tarjeta a la cual se le ha 
-	 * modificado la cabecera o el texto. UPDATE: 
+	 * modificado algún campo. UPDATE: 
 	 * @param card
-	 * @param Header 
-	 * @param Body 
 	 */
-	public boolean updateCard(Card card, String header, String body) {
+	public boolean updateCard(Card card) {
 		int result = 0;
 		ContentValues val = new ContentValues();
-		val.put(cardColumns.HEADER, header);
-		val.put(cardColumns.BODY, body);
+		val.put(cardColumns.HEADER, card.getHeader());
+		val.put(cardColumns.BODY, card.getBody());
+		val.put(cardColumns.ID_NEXT_CARD, card.getId_next_card());
+		val.put(cardColumns.ID_PREV_CARD, card.getId_prev_card());
+		val.put(cardColumns.ID_SPEECH, card.getId_speech());
+		
 		String whereClause =cardColumns._ID + " = " + card.getId_card();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -497,7 +561,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		//Actualizar colecciones:
 		ContentValues cv  = new ContentValues();
-		cv.put(speechColums.ID_CATEGORY, "0");
+		cv.put(speechColums.ID_CATEGORY, "-1");
 		String whereClause = speechColums.ID_CATEGORY+"=?";
 		String whereArgs[] = new String[]{String.valueOf(cat.getId())};
 		

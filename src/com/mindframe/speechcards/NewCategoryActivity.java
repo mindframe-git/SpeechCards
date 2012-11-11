@@ -1,5 +1,7 @@
 package com.mindframe.speechcards;
 
+import com.mindframe.speechcards.model.Category;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -15,7 +17,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mindframe.speechcards.model.Category;
 
 public class NewCategoryActivity extends Activity {
 
@@ -133,6 +134,9 @@ public class NewCategoryActivity extends Activity {
 	}
 	
 	public void actionEdit(){
+		
+		tvTitle.setText(R.string.tvEditCategory);
+		
 		Category cat = bdh.getCategoryById(id_cat);
 		etNewCategory.setText(cat.getName());
 		String[] colores =  cat.getColor().split(",");
@@ -153,7 +157,17 @@ public class NewCategoryActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				finish();
+				Category cat = new Category();
+				if(etNewCategory.getText().toString().trim().compareToIgnoreCase("") != 0){
+					cat.setId(id_cat);
+					cat.setName(etNewCategory.getText().toString());
+					cat.setColor(String.valueOf(alfa) + "," + String.valueOf(red) + "," + String.valueOf(green) + "," + String.valueOf(blue));
+					
+					bdh.updateCategory(cat);
+					finish();
+				}else {
+					Toast.makeText(context, R.string.toastVoidName, Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		

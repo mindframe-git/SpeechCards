@@ -12,7 +12,7 @@
     
  	<string name="btnNext">Next</string>
     <string name="btnPrev">Prev</string>
-    <string name="btnNewSpeech">New collection</string>
+    <string name="btnNewSpeech">New set</string>
     <string name="btnEditSpeech">Edit</string>
     <string name="btnPlaySpeech">Play</string>
     <string name="btnPrevCard">Prev</string>
@@ -21,7 +21,7 @@
     <string name="btnDeleteCard">Delete</string>
     <string name="btnEnd">End</string>
     <string name="btnMod">Save</string>
-    <string name="btnList">Collection list</string>
+    <string name="btnList">Set list</string>
     <string name="btnBack">Back</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnPreview">Preview</string>
@@ -35,7 +35,8 @@
 
     <!-- TextViews -->
     <string name="tvTitle">Title:</string>
-    <string name="tvNewCollecion">New Collection</string>
+    <string name="tvNewCollecion">New Set</string>
+    <string name="tvEditCollecion">Edit Set</string>
     <string name="tvTextSize">Text size:</string>
     <string name="tvTitleListEdit">Edit</string>
     <string name="tvTitleListPlay">Play</string>
@@ -47,6 +48,8 @@
 	<string name="tvBlue">Blue</string>
 	<string name="tvCategoryList">Category list</string>
 	<string name="tvNueva">New</string>
+	<string name="tvEditCategory">Edit category</string>
+	
     
     
     
@@ -90,22 +93,24 @@
     <string name="toastVoidHeader">You must enter something in the header.</string>
     <string name="toastAddCard">Card added.</string>
     <string name="toastDelCard">Card deleted.</string>
-    <string name="toastFisrtCard">Se encuentra en la primera tarjeta.</string>
+    <string name="toastFisrtCard">You are already at the first card.</string>
     <string name="toastNoCards">No Cards.</string>
     <string name="toastNoMoreCards">No more cards.</string>
     <string name="toastFail">Error.</string>
     <string name="toastUpdateCard">Card updated.</string>
     <string name="toastVoidName">You must enter a name.</string>
-    <string name="toastDelSpeech">Collection deleted.</string>
-    <string name="toastExistsSpeech">There is already a collection with that name.</string>
+    <string name="toastDelSpeech">Set deleted.</string>
+    <string name="toastExistsSpeech">There is already a set with that name.</string>
     <string name="toastExistsCategory">There is already a category with that name.</string>
-    <string name="toastNoSpeech">No collections.</string>
+    <string name="toastNoSpeech">No sets.</string>
     <string name="toastSaveCard">Card saved.</string>
     <string name="toastUpdateSize">Text size saved.</string>
+    <string name="toastDelCategory">Category deleted.</string>
     
     <!-- Dialogs -->
     <string name="dialTitle">Confirm</string>
-    <string name="dialMessageSpeech">Do you want to delete the current selection?</string>
+    <string name="dialMessageSpeech">Do you want to delete the entire set?</string>
+    <string name="dialMessageCategory">Do you want to delete the category?</string>
     <string name="dialMessageCard">Do you want to delete the card?</string>
     <string name="dialAcept">Accept</string>
     <string name="dialCancel">Cancel</string>

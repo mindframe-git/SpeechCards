@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.mindframe.speechcards.BaseDatosHelper;
 import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.R.id;
+import com.mindframe.speechcards.R.layout;
+import com.mindframe.speechcards.R.string;
 import com.mindframe.speechcards.model.Card;
 import com.mindframe.speechcards.model.Category;
 import com.mindframe.speechcards.model.Speech;

@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.mindframe.speechcards.BaseDatosHelper;
 import com.mindframe.speechcards.EditCardActivity;
 import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.R.id;
+import com.mindframe.speechcards.R.layout;
 import com.mindframe.speechcards.model.Card;
 
 @SuppressWarnings("rawtypes")

@@ -4,6 +4,9 @@ package com.mindframe.speechcards;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mindframe.speechcards.model.Card;
+import com.mindframe.speechcards.model.Speech;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -20,8 +23,6 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
-import com.mindframe.speechcards.model.Card;
-import com.mindframe.speechcards.model.Speech;
 
 public class SpeechActivity extends Activity {
 

@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mindframe.speechcards.R;
+import com.mindframe.speechcards.R.id;
+import com.mindframe.speechcards.R.layout;
 import com.mindframe.speechcards.model.Category;
 
 public class CategoryAdapter extends ArrayAdapter {
