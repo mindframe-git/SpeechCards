@@ -164,7 +164,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	public boolean existsSpeech(String title) {
 		boolean exists = false;
 		
-		String sql = "SELECT * FROM " + TABLE_NAME_SPEECH + " WHERE " + speechColums.TITLE + " = '" + title.trim() + "' COLLATE NOCASE";
+		String sql = "SELECT * FROM " + TABLE_NAME_SPEECH + " WHERE " + speechColums.TITLE + " = '" + title.replaceAll("'", "").trim() + "' COLLATE NOCASE";
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		
@@ -613,7 +613,7 @@ public class BaseDatosHelper extends SQLiteOpenHelper {
 	public boolean existsCategory(String catName){
 		boolean exists = false;
 		
-		String sql = "SELECT * FROM " + TABLE_NAME_CATEGORY + " WHERE " + categoryColumns.NAME + " = '" + catName.trim() + "' COLLATE NOCASE";
+		String sql = "SELECT * FROM " + TABLE_NAME_CATEGORY + " WHERE " + categoryColumns.NAME + " = '" + catName.replaceAll("'", "").trim() + "' COLLATE NOCASE";
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		Cursor c = db.rawQuery(sql, null);
